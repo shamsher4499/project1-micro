@@ -1,7 +1,7 @@
 # Cashuu
 ## Lending Money Web Application
 
-![N|Solid](http://cashuu.devtechnosys.tech/static/frontend/assets/images/logo.png)
+![N|Solid](https://cashuu.com/static/frontend/assets/images/logo.png)
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
@@ -12,7 +12,7 @@ This project uses Django as a web framework, Postgres as a database, pgAdmin as 
 ## Normal Installation
 
 1. Clone the repository
-    git clone git@git.devtechnosys.tech:shamsher_singh/micro-lending-application.git
+    git clone git@git.reponame/micro-lending-application.git
 
 2. Create a virtual environment and activate it
     python -m venv env
