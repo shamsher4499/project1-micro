@@ -1,0 +1,45 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Subscription Plans{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+    <div class="dashboard-main">
+        {% include 'frontend/include/sidebar.html' %}
+        <div class="dashboard-container">
+            <div class="dashboard-head">
+              <h4>Subscription</h4>
+            </div>
+            <div class="dashboard-container-in">
+                <div class="card-shadow card-sm">
+                    {% for subscription in subscriptions %}
+                    <div class="{% if subscription.original_price == 0 %}active-paln{% else %}more-paln mt-3{% endif %}">
+                      <h4>{{subscription.name}}</h4>
+                      <h5>
+                        {% if subscription.original_price == 0 %}
+                        Basic
+                        {% else %}
+                          {% if is_user_have_subscription %}
+                          Active
+                          {% else %}
+                          ${{subscription.original_price}}
+                          {% endif %}
+                        {% endif %}
+                      </h5>
+                      <ul class="{% if subscription.original_price == 0 %}plan-li{% else %}plan-li my-3{% endif %}">
+                        <li>{{subscription.description|safe}}</li>
+                      </ul>
+                      {% if subscription.original_price == 0 %}
+                      <div class="tag-free">Free</div>
+                      {% else %}
+                      {% comment %} <button class="btn btn-primary w-100">Buy Plan</button> {% endcomment %}
+                        {% if not is_user_have_subscription %}
+                        <a href="{% url 'buy_subscription' subscription.slug %}" class="btn btn-primary w-100">Buy Plan</a>
+                        {% endif %} 
+                      {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

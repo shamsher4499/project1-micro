@@ -1,0 +1,132 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| View User{% endblock %}
+{% block body %}
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">User Information</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'borrower_listing' %}">User</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{user.name}} Information</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <a href="{% url 'add_address' user.slug %}"><button class="btn btn-primary">Add Address</button></a>
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+            <!-- Simple Tables -->
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">{{user.name}} Information</h6>
+                </div>
+
+                <div class="detail-info-content">
+                    <ul>
+                        <li><span>Name</span> : {{user.name}}</li>
+                        <li><span>User Type</span> : {{user.user_type}}</li>
+                        <li><span>Email</span> : {{user.email}}</li>
+                        <li><span>Mobile</span> : {{user.mobile}}</li>
+                        <li><span>Calling Code</span> : {{user.calling_code}}</li>
+                        <li><span>Country Code</span> : {{user.country_code}}</li>
+                        <li><span>Email Status</span> : {% if user.is_verified == True %}Verified{% else %}Not Verified{% endif %}</li>
+                        <li><span>Mobile Status</span> : {% if user.mobile_verified == True %}Verified{% else %}Not Verified{% endif %}</li>
+                        <li><span>Document</span> : <a class="document-link-item" href="{{user.document.url}}"></a><a
+                                href="{{user.document.url}}" attributes-list download>Download</a></li>
+                    </ul>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <!-- Simple Tables -->
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">{{user.name}} Wallet</h6>
+                </div>
+                <div class="detail-info-content">
+                    <ul>
+                        {% if user_wallet %}
+                        <li><span>Name</span> : {{user.name}}</li>
+                        <li><span>Amount</span> : $ {{user_wallet.amount}}</li>
+                        <li><span>Status</span> : {{user_wallet.status}}</li>
+                        <li><span>Created</span> : {{user_wallet.created}}</li>
+                        {% else %}
+                        <p>No wallet found!</p>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        {% for i in user_address %}
+        <div class="col-lg-3 mb-4">
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">{{i.address_title}}</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Options:</div>
+                            <a class="dropdown-item" href="{% url 'edit_address' i.slug %}">Edit</a>
+                            <button type="button" class="dropdown-item btn delete-btn delete-user" href="{% url 'delete_address' i.slug %}">Delete</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-info-content">
+                    <ul>
+                        <li><span>Address</span> : {{i.address}}</li>
+                        <li><span>Area</span> : {{i.area}}</li>
+                        <li><span>City</span> : {{i.city}}</li>
+                        <li><span>State</span> : {{i.state}}</li>
+                        <li><span>ZipCode</span> : {{i.zipcode}}</li>
+                        <li><span>Landmark</span> : {{i.landmark}}</li>
+                        <li><span>Mobile Number</span> : {{i.calling_code}} {{i.phone_number}}</li>
+                    </ul>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        {% endfor %}
+        
+    </div>
+    <!--Row-->
+    <!-- Modal Logout -->
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to Delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                <a href="" class="btn btn-primary" id="user-delete-btn">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $('.delete-user').on('click', function () {
+        $('#deleteModal').modal('show')
+        $('#user-delete-btn').attr('href', $(this).attr('href'))
+    })
+</script>
+{% endblock %}

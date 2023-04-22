@@ -1,0 +1,35 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| FAQ{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="site-container site-container-white">
+          <div class="inner-head d-flex align-items-center justify-content-center">
+            <div class="container">
+              <h2>Frequently Asked Questions</h2>
+            </div>
+            <img src="{% static 'frontend/assets/images/shape-left.svg' %}" class="shape-left">
+            <img src="{% static 'frontend/assets/images/shape-right.svg' %}" class="shape-right">
+          </div>
+          <div class="cms-pages-wrap py-5">
+            <div class="container">
+              <div class="accordion" id="accordionExample">
+                {% for i in faq %}
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="heading{{i.id}}">
+                    <button class="accordion-button {% if forloop.first %}{% else %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{i.id}}" aria-expanded="false" aria-controls="collapse{{i.id}}">
+                      {{i.name}}
+                    </button>
+                  </h2>
+                  <div id="collapse{{i.id}}" class="accordion-collapse collapse {% if forloop.first %}show{% else %}{% endif %}" aria-labelledby="heading{{i.id}}" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      {{i.answer|safe}}
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

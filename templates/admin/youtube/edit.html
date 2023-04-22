@@ -1,0 +1,70 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| YouTube Link{% endblock %}
+{% block body %}
+<div class="container-login">
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <!-- Simple Tables -->
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">YouTube Link</h6>
+                </div>
+                <div class="container-xl px-4 mt-4">
+                    <hr class="mt-0 mb-4">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <!-- Profile picture card-->
+                            <div class="card mb-4 mb-xl-0">
+                                <div class="card-header">Thumbnail</div>
+                                <div class="card-body text-center">
+                                    <!-- Profile picture image-->
+                                    {% if youtube_id.thumbnail %}
+                                    <img class="img-account-profile rounded-circle mb-2" src="{{youtube_id.thumbnail.url}}"
+                                        alt="image not found" style="width: 100px;">
+                                    {% else %}
+                                    <p>not found</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-8">
+                            <!-- Account details card-->
+                            <div class="card mb-4">
+                                <div class="card-header">Youtube Link</div>
+                                <div class="card-body">
+                                    <form method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <!-- Form Group (username)-->
+                                        <!-- Form Row-->
+                                        <div class="row gx-3 mb-3">
+                                            <!-- Form Group (first name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputFirstName">Youtube Video ID</label>
+                                                <input class="form-control" id="inputFirstName" type="text" name="youtube"
+                                                    placeholder="Enter YouTube ID" value="{{youtube_id.youtube_id}}">
+                                            </div>
+                                            <!-- Form Group (last name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputLastName">Image</label>
+                                                <input type="file" class="form-control"
+                                                    accept="image/png, image/gif, image/jpeg" name="thumbnail"
+                                                    value="{{youtube_id.thumbnail}}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Save
+                                                Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

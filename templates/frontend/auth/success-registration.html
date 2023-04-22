@@ -1,0 +1,24 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Success Registration{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="site-container">
+          <div class="py-5">
+            <div class="container">
+              <div class="login-box card-shadow success-msg-box">
+                <div class="login-head text-center m-0">
+                  <div class="success-msg-icon">
+                    <i data-feather="check"></i>
+                  </div>
+                  <h4>Success!</h4>
+                  <p>Congratulations your account has been successfully created.</p>
+                  <div class="mt-4">
+                    <a href="{% url 'user_sign_in' %}" class="btn btn-primary">Login to your account</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

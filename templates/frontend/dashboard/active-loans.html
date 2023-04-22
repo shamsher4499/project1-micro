@@ -1,0 +1,120 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Loans History{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="dashboard-main">
+          {% include 'frontend/include/sidebar.html' %}
+          <div class="dashboard-container">
+            <div class="dashboard-head">
+              <h4>History</h4>
+            </div>
+            <div class="dashboard-container-in">
+              <div class="tabing-big mb-3">
+                <ul class="nav nav-pills nav-fill">
+                  {% url 'lender_loan_history' as lender_loan_history %}
+                  <li class="nav-item">
+                    <a class="nav-link {% if request.path == lender_loan_history %} active {% endif %}"href="{% url 'lender_loan_history' %}">Lender</a>
+                  </li>
+                  {% url 'user_loan_history' as user_loan_history %}
+                  <li class="nav-item ">
+                    <a class="nav-link {% if request.path == user_loan_history %} active {% endif %}" href="{% url 'user_loan_history' %}">Borrower</a>
+                  </li>
+                  {% url 'lending_box_loan_history' as lending_box_loan_history %}
+                  <li class="nav-item">
+                    <a class="nav-link {% if request.path == lending_box_loan_history %} active {% endif %}" href="{% url 'lending_box_loan_history' %}">Lending box</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-shadow-in">
+                <ul class="nav tabing-site nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#active-loans" type="button" role="tab" aria-selected="true">Active loans</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#completed-loans" type="button" role="tab" aria-selected="false" tabindex="-1">Completed loans</button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <div id="active-loans" class="tab-pane fade show active" role="tabpanel">
+                    <div class="loan-box">
+                      {% for active_loan in active_loans %}
+                      <div class="loan-box-row">
+                        <div class="loan-box-info d-flex align-items-center">
+                          <div class="loan-user-info d-flex me-4 align-items-center">
+                            <div class="user-img me-3">
+                              <a href="javascript:;">
+                                <img src="{% static 'frontend/assets/images/user.png' %}">
+                              </a>
+                            </div>
+                            <div class="loan-user-name">
+                              <h4><a href="javascript:;">{{ active_loan.lender.name }}</a></h4>
+                              <div class="amount-text">${{ active_loan.amount }}</div>
+                            </div>
+                          </div>
+                          <div class="interest-info">
+                            <div class="interest-info-in">
+                              <p>Interest rate</p>
+                              <span>{{ active_loan.fee }}%</span>
+                            </div>
+                            <div class="interest-info-in">
+                              <p>Next repayment date</p>
+                              <span>27 Nov 2022</span>
+                            </div>
+                            <div class="interest-info-in">
+                              <p>Pending amount left</p>
+                              <span>$300.00</span>
+                            </div>
+                          </div>
+                          <time class="ms-auto">27 Oct 2022</time>
+                        </div>
+                      </div>
+                      {% empty %}
+                      <div class="text-center">
+                        <p>No Records</p>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div id="completed-loans" class="tab-pane fade" role="tabpanel">
+                    <div class="loan-box">
+                      {% for completed_loan in completed_loans %}
+                      <div class="loan-box-row">
+                        <div class="loan-box-info d-flex align-items-center">
+                          <div class="loan-user-info d-flex me-4 align-items-center">
+                            <div class="user-img me-3">
+                              <a href="javascript:;">
+                                <img src="{% static 'frontend/assets/images/user.png' %}">
+                              </a>
+                            </div>
+                            <div class="loan-user-name">
+                              <h4><a href="javascript:;">{{ completed_loan.lender.name }}</a></h4>
+                              <div class="amount-text">${{ completed_loan.amount }}</div>
+                            </div>
+                          </div>
+                          <div class="interest-info">
+                            <div class="interest-info-in">
+                              <p>Interest rate</p>
+                              <span>{{ completed_loan.fee }}%</span>
+                            </div>
+                            <div class="interest-info-in">
+                              <p>Completed the loan</p>
+                              <span>{{ completed_loan.completed_date }}</span>
+                            </div>
+                          </div>
+                          <time class="ms-auto">27 Oct 2022</time>
+                        </div>
+                      </div>
+                      {% empty %}
+                      <div class="text-center">
+                        <p>No Records</p>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

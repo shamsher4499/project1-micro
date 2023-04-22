@@ -1,0 +1,22 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Privacy Policy{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="site-container site-container-white">
+          <div class="inner-head d-flex align-items-center justify-content-center">
+            <div class="container">
+              <h2>{{policy.name}}</h2>
+            </div>
+            <img src="{% static 'frontend/assets/images/shape-left.svg' %}" class="shape-left">
+            <img src="{% static 'frontend/assets/images/shape-right.svg' %}" class="shape-right">
+          </div>
+          <div class="cms-pages-wrap py-5">
+            <div class="container">
+              <div class="privacy-policy-text">
+                {{policy.desc|safe}}
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

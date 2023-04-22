@@ -1,0 +1,334 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Lending Box Detail{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+    <div class="dashboard-main">
+        {% include 'frontend/include/sidebar.html' %}
+        <div class="dashboard-container">
+        <div class="dashboard-head">
+            <h4>
+            <a href="{% url 'app_dashboard' %}" class="btn btn-icon" style="background: #fff;">
+                <i data-feather="chevron-left"></i>
+            </a> {{ lending_box.store_name }}
+            </h4>
+        </div>
+        <div class="dashboard-container-in">
+            <div class="card-shadow card-sm">
+            <div class="bid-details">
+                <div class="bid-details-in mb-4">
+                <div class="user-img user-img-lg m-auto">
+                    <img src="{% if lending_box.user.profile_pic %}{{ lending_box.user.profile_pic.url }}{% endif %}{% comment %}assets/images/apple.jpg{% endcomment %}">
+                </div>
+                <div class="tag-store text-center position-relative">
+                    {% if lending_box.store_category == "NEW" %}
+                    <span class="tag-text tag-new">New</span>
+                    {% elif lending_box.store_category == "PRO" %}
+                    <span class="tag-text tag-pro">Pro</span>
+                    {% elif lending_box.store_category == "PREMIUM" %}
+                    <span class="tag-text tag-premium">Premium</span>
+                    {% endif %}
+                </div>
+                <figure class="text-center mt-2">
+                    <h4>{{ lending_box.store_name }}</h4>
+                    <span>Since {{ lending_box.dob|date:"Y" }}</span>
+                    <div class="ratings justify-content-center">
+                    <div class="ratings-star">
+                        <i class="ri-star-{% if lending_box.rating >= 1 %}fill{% else %}line{% endif %}"></i>
+                        <i class="ri-star-{% if lending_box.rating >= 2 %}fill{% else %}line{% endif %}"></i>
+                        <i class="ri-star-{% if lending_box.rating >= 3 %}fill{% else %}line{% endif %}"></i>
+                        <i class="ri-star-{% if lending_box.rating >= 4 %}fill{% else %}line{% endif %}"></i>
+                        <i class="ri-star-{% if lending_box.rating >= 5 %}fill{% else %}line{% endif %}"></i>
+                    </div>
+                    <span>{{ lending_box.get_review_count }} review</span>
+                    </div>
+                </figure>
+                </div>
+                <div class="store-info">
+                {% if lending_box.about_us %}
+                <div class="store-info-sec">
+                    <div class="store-info-tit">
+                    <h4>About the Store</h4>
+                    </div>
+                    <p>{{ lending_box.about_us }}</p>
+                </div>
+                {% endif %}
+                <div class="store-info-sec">
+                    <div class="store-info-tit">
+                    <h4>Amount distribution</h4>
+                    </div>
+                    <p>${{ lending_box.avg_amount }}</p>
+                </div>
+                <div class="store-info-sec">
+                    <div class="store-info-tit">
+                    <h4>Location</h4>
+                    </div>
+                    <div class="location-info">
+                    <a href="http://maps.google.com/?q={{ lending_box.address }}" target="_blank"><i data-feather="map-pin"></i> {{ lending_box.address }}</a>
+                    </div>
+                    {% comment %} <div class="map-view">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8110.425035921714!2d-104.74877250690815!3d40.41000501292679!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876ea3ffceee4a0f%3A0x165eab011bbca29d!2sSt%20Paul&#39;s%20Congregational%20Church!5e0!3m2!1sen!2sin!4v1674120950023!5m2!1sen!2sin" width="100%" height="240" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div> {% endcomment %}
+                </div>
+                <div class="store-info-sec">
+                    <div class="store-info-tit align-items-center">
+                    <h4>Rating reviews </h4> 
+                    {% if not is_user_rated %}
+                    <a href="javascript:;" class="btn btn-primary ms-auto" data-bs-toggle="offcanvas" data-bs-target="#add-review" aria-controls="add-review">Give rating</a>
+                    {% endif %}
+                    </div>
+                    <div class="ratings-info-out mb-5">
+                    <div class="ratings-info mb-2">
+                        <h6>{{ lending_box.rating }}</h6>
+                        <div class="ratings-info-star">
+                        <i class="ri-star-{% if lending_box.rating >= 1 %}fill{% else %}line{% endif %}"></i>
+                        <i class="ri-star-{% if lending_box.rating >= 2 %}fill{% else %}line{% endif %}"></i>
+                        <i class="ri-star-{% if lending_box.rating >= 3 %}fill{% else %}line{% endif %}"></i>
+                        <i class="ri-star-{% if lending_box.rating >= 4 %}fill{% else %}line{% endif %}"></i>
+                        <i class="ri-star-{% if lending_box.rating >= 5 %}fill{% else %}line{% endif %}"></i>
+                        </div>
+                    </div>
+                    <span>Based on {{ lending_box.get_review_count }} review </span>
+                    </div>
+                    <div class="ratings-list">
+                    <ul>
+                        {% for store_review in store_reviews %}
+                        <li>
+                            <div class="loan-user-info d-flex">
+                                <div class="user-img me-3">
+                                <a href="javascript:;">
+                                    <img src="{% if store_review.user.profile_pic %}{{ store_review.user.profile_pic.url }}{% endif %}">
+                                </a>
+                                </div>
+                                <div class="loan-user-name w-100">
+                                <h4><a href="javascript:;">{{ store_review.user.name }}</a></h4>
+                                <div class="ratings">
+                                    <div class="ratings-star">
+                                    <i class="ri-star-{% if store_review.rating >= 1 %}fill{% else %}line{% endif %}"></i>
+                                    <i class="ri-star-{% if store_review.rating >= 2 %}fill{% else %}line{% endif %}"></i>
+                                    <i class="ri-star-{% if store_review.rating >= 3 %}fill{% else %}line{% endif %}"></i>
+                                    <i class="ri-star-{% if store_review.rating >= 4 %}fill{% else %}line{% endif %}"></i>
+                                    <i class="ri-star-{% if store_review.rating >= 5 %}fill{% else %}line{% endif %}"></i>
+                                    </div>
+                                    <span>{{ store_review.rating }}</span>
+                                </div>
+                                <p>{{ store_review.review }}</p>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        {% comment %} <li>
+                        <div class="loan-user-info d-flex">
+                            <div class="user-img me-3">
+                            <a href="javascript:;">
+                                <img src="assets/images/user.png">
+                            </a>
+                            </div>
+                            <div class="loan-user-name w-100">
+                            <h4><a href="javascript:;">Joshua Hughes</a></h4>
+                            <div class="ratings">
+                                <div class="ratings-star">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                </div>
+                                <span>5.0</span>
+                            </div>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                            </div>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="loan-user-info d-flex">
+                            <div class="user-img me-3">
+                            <a href="javascript:;">
+                                <img src="assets/images/user.png">
+                            </a>
+                            </div>
+                            <div class="loan-user-name w-100">
+                            <h4><a href="javascript:;">Joshua Hughes</a></h4>
+                            <div class="ratings">
+                                <div class="ratings-star">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                </div>
+                                <span>5.0</span>
+                            </div>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                            </div>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="loan-user-info d-flex">
+                            <div class="user-img me-3">
+                            <a href="javascript:;">
+                                <img src="assets/images/user.png">
+                            </a>
+                            </div>
+                            <div class="loan-user-name w-100">
+                            <h4><a href="javascript:;">Joshua Hughes</a></h4>
+                            <div class="ratings">
+                                <div class="ratings-star">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                </div>
+                                <span>5.0</span>
+                            </div>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                            </div>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="loan-user-info d-flex">
+                            <div class="user-img me-3">
+                            <a href="javascript:;">
+                                <img src="assets/images/user.png">
+                            </a>
+                            </div>
+                            <div class="loan-user-name w-100">
+                            <h4><a href="javascript:;">Joshua Hughes</a></h4>
+                            <div class="ratings">
+                                <div class="ratings-star">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                </div>
+                                <span>5.0</span>
+                            </div>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                            </div>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="loan-user-info d-flex">
+                            <div class="user-img me-3">
+                            <a href="javascript:;">
+                                <img src="assets/images/user.png">
+                            </a>
+                            </div>
+                            <div class="loan-user-name w-100">
+                            <h4><a href="javascript:;">Joshua Hughes</a></h4>
+                            <div class="ratings">
+                                <div class="ratings-star">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                </div>
+                                <span>5.0</span>
+                            </div>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                            </div>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="loan-user-info d-flex">
+                            <div class="user-img me-3">
+                            <a href="javascript:;">
+                                <img src="assets/images/user.png">
+                            </a>
+                            </div>
+                            <div class="loan-user-name w-100">
+                            <h4><a href="javascript:;">Joshua Hughes</a></h4>
+                            <div class="ratings">
+                                <div class="ratings-star">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                </div>
+                                <span>5.0</span>
+                            </div>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                            </div>
+                        </div>
+                        </li>
+                        <li>
+                        <div class="loan-user-info d-flex">
+                            <div class="user-img me-3">
+                            <a href="javascript:;">
+                                <img src="assets/images/user.png">
+                            </a>
+                            </div>
+                            <div class="loan-user-name w-100">
+                            <h4><a href="javascript:;">Joshua Hughes</a></h4>
+                            <div class="ratings">
+                                <div class="ratings-star">
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                <i class="ri-star-fill"></i>
+                                </div>
+                                <span>5.0</span>
+                            </div>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. </p>
+                            </div>
+                        </div>
+                        </li> {% endcomment %}
+                    </ul>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="add-review" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasRightLabel">Add rating & review</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <form method="POST" class="offcanvas-body">
+            {% csrf_token %}
+            <div class="loan-user-info text-center">
+                <div class="user-img m-auto">
+                    <a href="javascript:;">
+                        <img src="{% if lending_box.user.profile_pic %}{{ lending_box.user.profile_pic.url }}{% endif %}">
+                    </a>
+                </div>
+                <div class="loan-user-name w-100 mt-2">
+                    <h4><a href="javascript:;">{{ lending_box.store_name }}</a></h4>
+                </div>
+            </div>
+            <div class="star-widget">
+                <div class="ratings-box">
+                    <input type="radio" name="rate" id="rate-5" value="5">
+                    <label for="rate-5" class="fas fa-star"></label>
+                    <input type="radio" name="rate" id="rate-4" value="4">
+                    <label for="rate-4" class="fas fa-star"></label>
+                    <input type="radio" name="rate" id="rate-3" value="3">
+                    <label for="rate-3" class="fas fa-star"></label>
+                    <input type="radio" name="rate" id="rate-2" value="2">
+                    <label for="rate-2" class="fas fa-star"></label>
+                    <input type="radio" name="rate" id="rate-1" value="1">
+                    <label for="rate-1" class="fas fa-star"></label>
+                    <div class="msg"></div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="formFile" class="form-label">Review</label>
+                <textarea class="form-control" name="review" placeholder="Write something about the store..."></textarea>
+            </div>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

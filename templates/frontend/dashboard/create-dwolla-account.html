@@ -1,0 +1,119 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Create Dwolla Account{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+<div class="dashboard-main">
+    {% include 'frontend/include/sidebar.html' %}
+    <div class="dashboard-container">
+        <div class="dashboard-head">
+            <h4>Create Dwolla Account</h4>
+        </div>
+        <div class="dashboard-container-in">
+            <div class="tab-content" id="pills-tabContent">
+                <div id="Lender" class="tab-pane fade show active container" role="tabpanel" style="width: 60%;">
+                    <div class="card-shadow-in mb-4">
+                        <div class="budget-calculator">
+                            <div class="budget-calculator-head">
+                                <h4>Create Account</h4>
+                                <p>To Proceed Further</p>
+                            </div>
+                            <form method="POST" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                {% comment %} <div class="form-group">
+                                    <input type="number" class="form-control" id="login-email"
+                                        aria-describedby="inputGroupPrepend" required=""
+                                        placeholder="Enter amount">
+                                    <div class="invalid-feedback">
+                                        Please enter amount.
+                                    </div>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div> {% endcomment %}
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="text" id="first-name" class="form-control" required=""
+                                                placeholder="First Name" name="firstName" value="{{ customer.firstName }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required=""
+                                                placeholder="Last Name" name="lastName" value="{{ customer.lastName }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" required=""
+                                                placeholder="Email" name="email" value="{{ request.user.email }}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required=""
+                                                placeholder="Address" name="address1" value="{{ customer.address1 }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required=""
+                                                placeholder="City" name="city" value="{{ customer.city }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required=""
+                                                placeholder="State" maxlength="2" name="state" value="{{ customer.state }}" oninput="event.target.value = event.target.value.toUpperCase()">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required=""
+                                                placeholder="Postal Code" name="postalCode" value="{{ customer.postalCode }}" maxlength="5" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <input type="date" class="form-control" required=""
+                                                placeholder="Date of Birth" name="dateOfBirth" value="{{ customer.dateOfBirth }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required=""
+                                                placeholder="SSN Number" name="ssn" value="{{ customer.ssn }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-primary w-50 mb-4" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $('input[name=ssn]').on('input', function() {
+        let val = $(this).val()
+        val = val.replace(/\D/g, '');
+        val = val.replace(/^(\d{3})/, '$1-');
+        val = val.replace(/-(\d{2})/, '-$1-');
+        val = val.replace(/(\d)-(\d{4}).*/, '$1-$2');
+        $(this).val(val)
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| About Us{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="site-container site-container-white">
+          <div class="inner-head d-flex align-items-center justify-content-center">
+            <div class="container">
+              <h2>About us</h2>
+            </div>
+            <img src="{% static 'frontend/assets/images/shape-left.' %}svg" class="shape-left">
+            <img src="{% static 'frontend/assets/images/shape-right' %}.svg" class="shape-right">
+          </div>
+          <div class="cms-pages-wrap py-5">
+            <div class="about-head">
+              <div class="container">
+                <div class="text-center">
+                  <h2>{{about_us.name}}</h2>
+                  <p>{{about_us.desc1|safe}}</p>
+                  <div class="mt-5">
+                    <img src="{{about_us.image1.url}}" width="100%">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="about-sec-in section-padding">
+              <div class="container">
+                <div class="row align-items-center">
+                  <div class="col-md-6">
+                    <div class="headings">
+                      <figure>
+                        <img src="{{about_us.image2.url}}" width="100%">
+                      </figure>
+                    </div>
+                  </div>
+                  <div class="col-md-5 ms-auto">
+                    <div class="headings">  
+                      <p>{{about_us.desc2|safe}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row align-items-center">
+                  <div class="col-md-5">
+                    <div class="headings">
+                      <p>{{about_us.desc3|safe}} </p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 ms-auto">
+                    <div class="headings">
+                      <figure>
+                        <img src="{{about_us.image3.url}}" width="100%">
+                      </figure>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="download-the-app section-padding">
+              <div class="container">
+                <div class="row align-items-center">
+                  <div class="col-md-5">
+                    <div class="headings">
+                      <h2>Download Cashuu App & Start Investing</h2>
+                      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry lorem Ipsum has been the industrys standard dummy text ever since the when an unknown printer took a galley of type </p>
+                      <div class="app-d-btn mt-4">
+                        <a href="javascript:;">
+                          <img src="{% static 'frontend/assets/images/play-store.' %}svg">
+                        </a>
+                        <a href="javascript:;">
+                          <img src="{% static 'frontend/assets/images/app-store.s' %}vg">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5 ms-auto">
+                    <figure>
+                      <img src="{% static 'frontend/assets/images/about-phone' %}1.png">
+                    </figure>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="our-team-sec section-padding">
+              <div class="container">
+                <div class="headings text-center w-50 m-auto mb-5">
+                  <span>Our Team</span>
+                  <h2>Our Dedicated Team</h2>
+                </div>
+                <div class="row team-ui">
+                  {% for i in teams %}
+                  <div class="col-md-4 team-ui-box text-center">
+                    <article>
+                      <div class="user-img m-auto mb-4">
+                        <img src="{{i.image.url}}">
+                      </div>
+                      <h4>{{i.name}}</h4>
+                      <p>{{i.position}}</p>
+                    </article>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

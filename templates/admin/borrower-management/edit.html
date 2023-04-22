@@ -1,0 +1,90 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| Edit User{% endblock %}
+{% block body %}
+<!-- <style>
+    #document::after{
+        content: "{{user.document}}.name";
+    }
+</style> -->
+<div class="container-login">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="login-form">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">User</h1>
+                                </div>
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Full Name <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="name"
+                                            value="{{user.name}}" name="name" placeholder="Enter Full Name"
+                                            maxlength="20">
+                                    </div>
+                                    <div class="form-group" style="position: relative;">
+                                        <label>Mobile <sup style="color: red;">&#9733;</sup></label>
+                                        <select name="calling_code" style="position: absolute;bottom: 9px;left: 12px;">
+                                            {% for code in country_data %}
+                                            <option value="{{ code.dial_code }}${{ code.code }}" {% if code.dial_code in user.calling_code %}selected{% endif %}>{{ code.dial_code }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <input type="text" class="form-control" id="mobile" value="{{user.mobile}}" name="mobile"
+                                            placeholder="Enter Mobile Number" maxlength="10"
+                                            onkeypress="return event.charCode >= 48 && event.charCode <= 57" style="padding: 0px 95px;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="email" value="{{user.email}}"
+                                            name="email" aria-describedby="emailHelp" placeholder="Enter Email Address" maxlength="50" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Documents <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" name="documents" id="document"
+                                            aria-describedby="emailHelp" value="{{user.document}}" accept="application/pdf, .pdf"
+                                            placeholder="Upload document" maxlength="50">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Account Status <sup style="color: red;">&#9733;</sup></label>
+                                        <select class="form-control" id="choices" name="status">
+                                            <option value="1" name="ACTIVE" {% if user.is_active %} selected {% endif %}>Active</option>
+                                            <option value="0" name="DEACTIVATE" {% if not user.is_active %} selected {% endif %}>Deactivate</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                style="margin-right: 2px;">Save</button>
+                                        </div>
+                                        <div class="form-group">
+                                            <a href="{% url 'borrower_listing' %}"><button type="button"
+                                                    class="btn btn-danger btn-sm">Cancel</button></a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function () {
+        $('input[type="file"]').change(function (e) {
+            var change_name = "{{ user.document}}"[0].name;
+            $("h4").text(change_name + ' is the selected file.');
+        });
+    });
+</script>
+{% endblock %}

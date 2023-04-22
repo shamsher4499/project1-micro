@@ -1,0 +1,81 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| View Subscription Plan{% endblock %}
+{% block body %}
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Subscription Plan Information</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'store_subscription_plan_listing' %}">Subscription Plan</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{subscription_plan.name}} Information</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <!-- Simple Tables -->
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">{{subscription_plan.name}} Information</h6>
+                </div>
+
+                <div class="detail-info-content">
+                    <ul>
+                        <li><span>Plan Name</span> : {{subscription_plan.name}}</li>
+                        <li><span>Price Type</span> : {{subscription_plan.price}}</li>
+                        <li><span>Interval</span> : {{subscription_plan.interval}}</li>
+                        <li><span>Created</span> : {{subscription_plan.created}}</li>
+                    </ul>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <!-- Simple Tables -->
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Description</h6>
+                </div>
+                <div class="detail-info-content">
+                    <ul>
+                        {{subscription_plan.description|safe}}
+                    </ul>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        
+    </div>
+    <!--Row-->
+    <!-- Modal Logout -->
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to Delete?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                <a href="" class="btn btn-primary" id="user-delete-btn">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $('.delete-user').on('click', function () {
+        $('#deleteModal').modal('show')
+        $('#user-delete-btn').attr('href', $(this).attr('href'))
+    })
+</script>
+{% endblock %}

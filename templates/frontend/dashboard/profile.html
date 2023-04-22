@@ -1,0 +1,135 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Profile{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+<div class="dashboard-main">
+  {% include 'frontend/include/sidebar.html' %}
+  <div class="dashboard-container">
+    <div class="dashboard-head">
+      <h4>My Profile</h4>
+    </div>
+    <div class="dashboard-container-in">
+      <form class="needs-validation" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-shadow card-sm">
+          <div class="upload-profile mb-3">
+            <div class="user-img user-img-lg m-auto">
+              <img
+                src="{% if request.user.profile_pic %}{{request.user.profile_pic.url}}{% else %}{% static 'frontend/assets/images/user.png' %}{% endif %}">
+            </div>
+            <div class="btn btn-icon input-button d-flex m-auto">
+              <i><i data-feather="edit-3"></i></i>
+              <input type="file" name="image" id="formFile" accept="image/jpeg image/png">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="formFile" class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" placeholder="" value="{{request.user.name}}">
+          </div>
+          <div class="form-group">
+            <label for="formFile" class="form-label">Email address</label>
+            <input type="text" class="form-control" disabled placeholder="" value="{{request.user.email}}">
+          </div>
+          <div class="form-group number-verify">
+            <label for="formFile" class="form-label">Mobile Number <span>*</span></label>
+            <input type="text" name="mobile" class="form-control" placeholder="" value="{{request.user.mobile}}">
+            {% if request.user.mobile_verified %}
+            <p class="number-verify-btn">Verified</p>
+            {% else %}
+            <p class="number-verify-btn" id="verify-num-btn" style="cursor: pointer;">Verify</p>
+            {% endif %}
+          </div>
+          <button class="mt-2 btn btn-primary w-100" type="submit">Update profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="verfiy-otp-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabelLogout">Enter OTP to Verify Mobile Number</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{% url 'app_verify_mobile_number' %}" id="verify-mob-num-form" class="verification-box py-3">
+          {% csrf_token %}
+         <div class="otp-box">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group mb-4">
+                <input type="text" class="form-control otp-field" maxlength="1" name="otp1">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group mb-4">
+                <input type="text" class="form-control otp-field" maxlength="1" name="otp2">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group mb-4">
+                <input type="text" class="form-control otp-field" maxlength="1" name="otp3">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group mb-4">
+                <input type="text" class="form-control otp-field" maxlength="1" name="otp4">
+              </div>
+            </div>
+          </div>  
+         </div>
+
+         <div class="two-button-box">
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-primary" type="button" id="resend-otp" name="resend_otp">Resend</button>
+          </div>
+        </form>
+        <!-- <div class="d-flex justify-content-between">
+          <div class="otp-box"><input type="text" class="otp-digit"></div>
+          <div class="otp-box"><input type="text" class="otp-digit"></div>
+          <div class="otp-box"><input type="text" class="otp-digit"></div>
+          <div class="otp-box"><input type="text" class="otp-digit"></div>
+        </div> -->
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+        <a href="" class="btn btn-primary" id="account-delete-btn">Verify</a>
+      </div> -->
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).on('input', '.otp-field', function(e) {
+    if($(this).val()) {
+      if (isNaN($(this).val())) {
+        $(this).val("")
+        return false;
+      }
+      $(this).parent().parent().next().find('input').focus()
+    } else {
+      $(this).parent().parent().prev().find('input').focus()
+    }
+  })
+</script>
+<script>
+  $('#verify-num-btn, #resend-otp').on('click', function() {
+    $('#verify-mob-num-form')[0].reset()
+    fetch("{% url 'app_send_sms_to_verify_mob_num' %}", {
+      method: "GET",
+    }).then((response) => {
+      return response.json()
+    }).then((data) => {
+      if(data.status) {
+        $('#verfiy-otp-modal').modal('show')
+        myToast(data.message, SUCCESS)
+      } else {
+        myToast(data.message, ERROR)
+      }
+    })
+  })
+</script>
+{% endblock %}

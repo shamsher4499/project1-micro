@@ -1,0 +1,176 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Wallet{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="dashboard-main">
+          {% include 'frontend/include/sidebar.html' %}
+          <div class="dashboard-container">
+            <div class="dashboard-head">
+              <h4>Wallet</h4>
+            </div>
+            <div class="dashboard-container-in">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card-shadow-in">
+                    <div class="wallet-box">
+                      <span>Total Amount</span>
+                      <h4>${% if wallet_amount %}{{ wallet_amount.value }}{% else %}0.00{% endif %}</h4>
+                      <div class="add-money-wallet text-end">
+                        <button class="btn" data-bs-toggle="modal" data-bs-target="#add-amount-modal">
+                          <i data-feather="plus"></i>
+                          Transfer money
+                        </button>
+                        <button class="btn" data-bs-toggle="modal" data-bs-target="#add-amount-modal">
+                          <i data-feather="plus"></i>
+                          Add money
+                        </button>
+                      </div>
+                    </div>
+                    <div class="wallet-history">
+                      <h4 class="mt-4">Transaction history</h4>
+                      <div class="loan-box mt-3">
+                        {% for i in page_obj %}
+                        <div class="loan-box-row">
+                          <div class="loan-box-info">
+                            <div class="loan-user-info d-flex align-items-center">
+                              {% comment %} <div class="user-img me-3">
+                                <a href="javascript:;">
+                                  <img src="{% static 'frontend/assets/images/user.png' %}">
+                                </a>
+                              </div> {% endcomment %}
+                              <div class="loan-user-name">
+                                <h4>
+                                  <a href="javascript:;">
+                                    Transfer (
+                                    {% if i.status == 'processed' %}
+                                    <span class="text-success">Success</span>
+                                    {% else %}
+                                    <span class="text-danger">Pending</span>
+                                    {% endif %} )
+                                  </a>
+                                </h4>
+                                <time>{{ i.created }}</time>
+                              </div>
+                              <div class="amount-text ms-auto">${{ i.amount.value }}</div>
+                            </div>
+                          </div>
+                        </div>
+                        {% empty %}
+                        <div class="text-center">
+                          <p>No Records</p>
+                        </div>
+                        {% endfor %}
+                        {% if page_obj %}
+                          <nav aria-label="..." class="pagination-nav">
+                              <ul class="pagination">
+                                {% if page_obj.has_previous %} {# whether the previous page exists #}
+                                <li class="page-item">
+                                  <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1">Previous</a>
+                                </li>
+                                {% endif %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">{{ page_obj.number }} <span class="sr-only">(current)</span></a>
+                                </li>
+                                {% if page_obj.has_next %} {# whether the next page exists #}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+                                </li>
+                                {% endif %}
+                              </ul>
+                          </nav>
+                        {% endif %}
+                        {% comment %} <div class="loan-box-row">
+                          <div class="loan-box-info">
+                            <div class="loan-user-info d-flex align-items-center">
+                              <div class="user-img me-3">
+                                <a href="javascript:;">
+                                  <img src="{% static 'frontend/assets/images/user.png' %}">
+                                </a>
+                              </div>
+                              <div class="loan-user-name">
+                                <h4><a href="javascript:;">Joshua Hughes</a></h4>
+                                <time>27 Oct 2022</time>
+                              </div>
+                              <div class="amount-text ms-auto">-$500.00</div>
+                            </div>
+                          </div>
+                        </div> {% endcomment %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="add-amount-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelLogout">Add Money To Wallet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form method="POST" action="{% url 'app_transfer_to_wallet' %}" id="verify-mob-num-form" class="needs-validation">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="text" id="amount-inp" class="form-control" min="1" name="amount" placeholder="Enter Amount" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-label">Select Bank</label>
+                        <select name="source" class="form-select form-control">
+                          {% for active_bank_account in active_bank_accounts %}
+                          <option value="{{ active_bank_account.id }}">{{ active_bank_account.name }}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                    </div>
+                  </div>  
+                  <div class="form-group mb-0">
+                    <button class="btn btn-primary w-100" type="button" id="submit-btn" disabled>Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block script %}
+<script>
+  $('#amount-inp').on('input', function() {
+    const element = $(this)
+    element.parent().find('#max-limit-error').remove()
+    fetch("{% url 'app_check_wallet_amount_max_limit' %}", {
+      method: 'POST',
+      headers: { "X-CSRFToken": "{{ csrf_token }}" },
+      body: JSON.stringify({
+        amount: element.val()
+      })
+    })
+    .then(response => response.json())
+      .then(data => {
+        if(data.status) {
+          $('#submit-btn').attr('type', 'submit')
+          $('#submit-btn').prop('disabled', false)
+        } else {
+          $('#submit-btn').attr('type', 'button')
+          $('#submit-btn').prop('disabled', true)
+          element.parent().append(`<div class="text-center" id="max-limit-error"><span style="color:red;">${data.message}</span></div>`)
+        }
+      })
+  })
+
+  $('#submit-btn').on('click', function() {
+    $("#loader").remove()
+    $(`<div id="loader" style="position: fixed; z-index: 9999999;"><div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading...</span></div></div>`).appendTo('body')
+  })
+
+</script>
+{% endblock %}

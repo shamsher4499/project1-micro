@@ -1,0 +1,41 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| User Information{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="dashboard-main">
+          <!-- {% include 'frontend/include/sidebar.html' %} -->
+          <div class="dashboard-container">
+            <div class="dashboard-container-in">
+              <form class="needs-validation" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+              <div class="card-shadow card-sm">
+                <div class="upload-profile mb-3">
+                  <div class="user-img user-img-lg m-auto">
+                    <img src="{% if user.profile_pic %}{{user.profile_pic.url}}{% else %}{% static 'frontend/assets/images/user.png' %}{% endif %}">
+                  </div>
+                  <!-- <div class="btn btn-icon input-button d-flex m-auto">
+                    <i><i data-feather="edit-3"></i></i>
+                    <input type="file" name="image" id="formFile" accept="image/jpeg image/png">
+                  </div> -->
+                </div>
+                <div class="form-group">
+                  <label for="formFile" class="form-label">Name</label>
+                  <input type="text" name="name" class="form-control" placeholder="" value="{{user.name}}" disabled>
+                </div>
+                <div class="form-group">
+                  <label for="formFile" class="form-label">Email address</label>
+                  <input type="text" class="form-control" disabled placeholder="" value="{{user.email}}">
+                </div>
+                <div class="form-group number-verify">
+                  <label for="formFile" class="form-label">Mobile Number <span>*</span></label>
+                  <input type="text" name="mobile" class="form-control" placeholder="" value="{{user.mobile}}" disabled>
+                  <p class="number-verify-btn">{% if user.mobile_verified %}Verified{% else %}Verify{% endif %}</p>
+                </div>
+                <!-- <button class="mt-2 btn btn-primary w-100" type="submit">Update profile</button> -->
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+{% endblock %}

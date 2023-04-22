@@ -1,0 +1,40 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  CONTAINER_IMAGE: my-docker-compose-image
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
+build:
+  stage: build
+  script:
+    - docker-compose build
+    - docker tag $CONTAINER_IMAGE:latest $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+test:
+  stage: test
+  script:
+    - docker-compose run --rm web python manage.py test
+
+deploy:
+  stage: deploy
+  script:
+    - docker-compose up -d
+  environment:
+    name: production
+    url: https://cashuu.com
+  when: manual
+  only:
+    - master

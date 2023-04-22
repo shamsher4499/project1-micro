@@ -1,0 +1,280 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Signup{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'frontend/assets/css/custom.css' %}">
+        <div class="site-container">
+          <div class="py-5">
+            <div class="container">
+              <div class="login-box card-shadow signup-form">
+                <div class="login-head text-center">
+                  <h4>Create an account</h4>
+                  <p>Setup a new account in a minute.</p>
+                </div>
+                <div class="form-box">
+                  <form class="needs-validation" method="POST" id="myForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                      <!-- <div class="social-btn row">
+                        <div class="col-md-6">
+                          <a href="javascript:;" class="btn btn-fb w-100">
+                            Facebook
+                            <i><img src="{% static 'frontend/assets/images/fb.svg' %}"></i>
+                          </a>
+                        </div>
+                        <div class="col-md-6">
+                          <a href="javascript:;" class="btn btn-google w-100">
+                            Google
+                            <i><img src="{% static 'frontend/assets/images/google.svg' %}"></i>
+                          </a>
+                        </div>
+                      </div> -->
+                      <!-- <div class="or-divider">
+                        <span>OR SIGN UP WITH</span>
+                      </div> -->  
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-label">Email address</label>
+                            <div class="input-group">
+                              <span class="input-group-text" id="inputGroupPrepend">
+                                <i data-feather="mail"></i>
+                              </span>
+                              <input type="text" value="{{data.email}}" name="email" class="form-control" placeholder="Email address">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group mobile-number-box">
+                            <label class="form-label">Mobile Number <span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text" id="inputGroupPrepend">
+                                <i data-feather="smartphone"></i>
+                              </span>
+                              <input type="text" value="{{data.mobile}}" name="mobile" class="form-control" placeholder="Enter mobile number" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                              <select class="country-code" name="calling_code">
+                                {% for code in country_data %}
+                                <option value="{{ code.dial_code }}${{ code.code }}" {% if code.dial_code == "+1" %}selected{% endif %}>{{ code.dial_code }}</option>
+                                {% endfor %}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        {% comment %} <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="form-label">Name<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text" id="inputGroupPrepend">
+                                <i data-feather="user"></i>
+                              </span>
+                              <input type="text" value="{{data.name}}" name="name" class="form-control" placeholder="Enter name">
+                            </div>
+                          </div>
+                        </div> {% endcomment %}
+
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-label">Password<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text" id="inputGroupPrepend">
+                                <i class="fa fa-eye-slash toggle-password" aria-hidden="true"></i>
+                              </span>
+                              <input type="password" name="password" class="form-control toggle-password-inp" placeholder="Enter password">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-label">Confirm Password<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text" id="inputGroupPrepend">
+                                <i class="fa fa-eye-slash toggle-password" aria-hidden="true"></i>
+                                {% comment %} <i data-feather="eye-off" class="toggle-password"></i> {% endcomment %}
+                              </span>
+                              <input type="password" name="confirm_password" class="form-control toggle-password-inp" placeholder="Enter confirm password">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="formFile" class="form-label">Upload Document</label>
+                            <div class="input-file form-control">
+                              <span class='button btn btn-secondary'>Choose</span>
+                              <input type="file" name="document" id="formFile" accept="application/pdf, .pdf">
+                               <span class='label' data-js-label>No file selected</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-label">First Name<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i data-feather="user"></i>
+                              </span>
+                              <input type="text" id="first-name" class="form-control" required="" placeholder="First Name" name="first_name" value="{{ data.first_name }}">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-label">Last Name<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i data-feather="user"></i>
+                              </span>
+                              <input type="text" class="form-control" required="" placeholder="Last Name" name="last_name" value="{{ data.last_name }}">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="form-label">Address<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i data-feather="home"></i>
+                              </span>
+                              <input type="text" class="form-control" required="" placeholder="Address" name="address1" value="{{ data.address1 }}">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-label">City<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i data-feather="map-pin"></i>
+                              </span>
+                              <input type="text" class="form-control" required="" placeholder="City" name="city" value="{{ data.city }}">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-label">State<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i data-feather="map"></i>
+                              </span>
+                              <!-- <input type="text" class="form-control" required="" placeholder="State" maxlength="2" name="state" value="{{ data.state }}" oninput="event.target.value = event.target.value.toUpperCase()"> -->
+                              <select class="form-control" name="state_code" style="background-position-x: 95%">
+                                {% for code in states_data %}
+                                <option value="{{ code.abbreviation }}" {% if code.abbreviation %}selected{% endif %}>{{ code.abbreviation }}</option>
+                                {% endfor %}
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-label">Postal Code<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i data-feather="inbox"></i>
+                              </span>
+                              <input type="text" class="form-control" required="" placeholder="Postal Code" name="postal_code" value="{{ data.postal_code }}" maxlength="5" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label class="form-label">Date of Birth<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i data-feather="calendar"></i>
+                              </span>
+                              <input type="date" class="form-control" required="" placeholder="Date of Birth" name="date_of_birth" value="{{ data.date_of_birth }}">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label class="form-label">SSN<span>*</span></label>
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <i data-feather="file-text"></i>
+                              </span>
+                              <input type="text" class="form-control" required="" placeholder="SSN Number" name="ssn" value="{{ data.ssn }}">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-12">
+                          <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" value="1" name="is_checked" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              I Accept the  <a href="{% url 'app_term_conditions' %}">terms and conditions</a>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group mb-0">
+                        <button class="btn btn-primary w-100" type="button" onclick="showLoader()">Signup</button>
+                      </div>
+                      <div class="new-user-text">
+                        <p>Already a user?<a href="{% url 'user_sign_in' %}"> Login</a></p>
+                      </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block script %}
+<script>
+  // input file
+  var inputs = document.querySelectorAll('.input-file')
+
+  for (var i = 0, len = inputs.length; i < len; i++) {
+    customInput(inputs[i])
+  }
+
+  function customInput(el) {
+    const fileInput = el.querySelector('[type="file"]')
+    const label = el.querySelector('[data-js-label]')
+
+    fileInput.onchange =
+      fileInput.onmouseout = function () {
+        if (!fileInput.value) return
+
+        var value = fileInput.value.replace(/^.*[\\\/]/, '')
+        el.className += ' -chosen'
+        label.innerText = value
+      }
+  }
+</script>
+<script>
+  $('.toggle-password').on('click', function() {
+    const togglePasswordInp = $(this).parent().siblings(".toggle-password-inp")
+    if($(this).hasClass("fa-eye-slash")) {
+      $(this).removeClass("fa-eye-slash").addClass("fa-eye")
+      togglePasswordInp .attr('type', "text")
+    } else {
+      $(this).removeClass("fa-eye").addClass("fa-eye-slash")
+      togglePasswordInp.attr('type', "password")
+    }
+  })
+</script>
+<script>
+  $('input[name=ssn]').on('input', function(e) {
+      let val = $(this).val()
+      val = val.replace(/\D/g, '');
+      val = val.replace(/^(\d{3})/, '$1-');
+      val = val.replace(/-(\d{2})/, '-$1-');
+      val = val.replace(/(\d)-(\d{4}).*/, '$1-$2');
+      $(this).val(val)
+  })
+
+</script>
+{% endblock %}

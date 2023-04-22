@@ -1,0 +1,21 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Blog Details{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="site-container site-container-white">
+          <div class="cms-pages-wrap py-5">
+            <div class="container">
+              <div class="blog-img">
+                <img src="{{blog.image.url}}">
+              </div>
+              <div class="blog-content">
+                <div class="blog-head">
+                  <time>{{blog.created}}</time>
+                  <h2>{{blog.name}} </h2>
+                  <p>{{blog.desc|safe}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

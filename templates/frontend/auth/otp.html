@@ -1,0 +1,72 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| OTP Verification{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="site-container">
+          <div class="py-5">
+            <div class="container">
+              <div class="login-box card-shadow">
+                <div class="login-head text-center">
+                  <figure>
+                    <img src="{% static 'frontend/assets/images/verification.svg' %}">
+                  </figure>
+                  <h4>OTP verification</h4>
+                  <p>Enter the verification code we just sent you on your email address
+                    <span>{{user.email}}</span>
+                  </p>
+                </div>
+                <div class="form-box">
+                  <form class="needs-validation verification-box" method="POST" novalidate>
+                    {% csrf_token %}
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group mb-4">
+                          <input type="text" class="form-control otp-field" maxlength="1" name="otp1" required="">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group mb-4">
+                          <input type="text" class="form-control otp-field" maxlength="1" name="otp2" required="">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group mb-4">
+                          <input type="text" class="form-control otp-field" maxlength="1" name="otp3" required="">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group mb-4">
+                          <input type="text" class="form-control otp-field" maxlength="1" name="otp4" required="">
+                        </div>
+                      </div>
+                    </div>  
+                    <div class="form-group mb-0">
+                      <button class="btn btn-primary w-100" type="submit">Submit</button>
+                    </div>
+                    <div class="new-user-text">
+                      <!-- <p>Didn't receive the code? <a href="">Resend</a></p> -->
+                      <button class="btn btn-primary w-100" type="submit" name="resend_otp">Resend</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).on('input', '.otp-field', function(e) {
+    if($(this).val()) {
+      if (isNaN($(this).val())) {
+        $(this).val("")
+        return false;
+      }
+      $(this).parent().parent().next().find('input').focus()
+    } else {
+      $(this).parent().parent().prev().find('input').focus()
+    }
+  })
+</script>
+{% endblock %}

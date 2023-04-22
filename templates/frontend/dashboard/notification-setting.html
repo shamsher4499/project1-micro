@@ -1,0 +1,39 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Notification Settings{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="dashboard-main">
+          {% include 'frontend/include/sidebar.html' %}
+          <div class="dashboard-container">
+            <div class="dashboard-head">
+              <h4>Notification Setting</h4>
+            </div>
+            <div class="dashboard-container-in">
+              <div class="card-shadow card-sm">
+                <div class="notification-s-box">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s,</p>
+                  <div class="switch-text-box d-flex align-items-center mt-4">
+                    <h5>Notification alert</h5>
+                    <div class="form-check form-switch ms-auto">
+                      <form method="POST" id="nofication-alert-form">
+                        {% csrf_token %}
+                      <input class="form-check-input" type="checkbox" name="settings" onchange="notifications()" value="{% if request.user.notification_settings %}0{% else %}1{% endif %}" role="switch" 
+                      {% if request.user.notification_settings %}checked{% endif %}
+                      id="flexSwitchCheckDefault">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block script %}
+<script>
+  function notifications() {
+    $('#nofication-alert-form').submit()
+    }
+</script>
+{% endblock %}

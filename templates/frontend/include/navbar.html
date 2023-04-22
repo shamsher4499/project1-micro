@@ -1,0 +1,249 @@
+{% load static %}
+<header>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{%  static 'frontend/assets/images/logo.png' %}">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'app_about_us' %}">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-its-works">How it works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'app_contact_us' %}">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'app_faq' %}">FAQ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'app_blog' %}">Blogs</a>
+                    </li>
+                </ul>
+                {% if request.user.is_authenticated and not request.user.is_superuser %} 
+                <div class="after-login-act ms-3">
+                    <a href="javascript:;" class="btn btn-icon me-2">
+                        <i data-feather="bell"></i>
+                        <span>03</span>
+                    </a>
+                    <a href="{% url 'app_lender_wallet' %}" class="btn btn-icon me-2 show-loader">
+                        <i>
+                          <svg id="wallet-03" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <rect id="wallet-03-2" data-name="wallet-03" width="24" height="24" fill="none"/>
+                            <path id="Icon" d="M14,11a.5.5,0,1,1-.5-.5A.5.5,0,0,1,14,11Z" transform="translate(3 3)" fill="none" stroke="#274250" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            <path id="Icon-2" data-name="Icon" d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,0,2,4H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18Z" transform="translate(3 3)" fill="none" stroke="#274250" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            <path id="Icon-3" data-name="Icon" d="M13.5,11h.01M0,2A2,2,0,0,1,2,0H14" transform="translate(3 3)" fill="none" stroke="#274250" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                          </svg>
+                        </i>
+                    </a>
+                    <div class="dropdown user-btn-header">
+                        <button class="btn btn-secondary dropdown-toggle dropdown-toggle-split" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <img src="{% if request.user.profile_pic %}{{request.user.profile_pic.url}}{% else %}{% static 'frontend/assets/images/user.png' %}{% endif %}">
+                        </button>
+                        <ul class="dropdown-menu profile-menu">
+                            <li>
+                                <a href="{% if request.user.is_authenticated and not request.user.is_superuser %}
+                                {% url 'app_dashboard' %}{% endif %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <g fill="none" class="nc-icon-wrapper">
+                                                <path
+                                                    d="M8.126 14a4.002 4.002 0 0 0 7.748 0M11.018 2.764L4.235 8.039c-.453.353-.68.53-.843.75a2 2 0 0 0-.318.65C3 9.704 3 9.991 3 10.565V17.8c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874C4.52 21 5.08 21 6.2 21h11.6c1.12 0 1.68 0 2.108-.218a2 2 0 0 0 .874-.874C21 19.48 21 18.92 21 17.8v-7.235c0-.574 0-.861-.074-1.126a2.002 2.002 0 0 0-.318-.65c-.163-.22-.39-.397-.843-.75l-6.783-5.275c-.351-.273-.527-.41-.72-.462a1 1 0 0 0-.523 0c-.194.052-.37.189-.721.462z"
+                                                    stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% if request.user.is_authenticated and not request.user.is_superuser %}
+                                {% url 'app_bid_request' %}{% endif %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24"
+                                            height="24" viewBox="0 0 24 24">
+                                            <path id="Path_33469" data-name="Path 33469"
+                                                d="M13.959,6.173,12.318,7.905a9.514,9.514,0,0,0-2.044,3.317l-.81,2.243a1.986,1.986,0,0,1-2.732.649L3.252,11.97A1.986,1.986,0,0,1,2.6,9.238L4.243,7.506A9.514,9.514,0,0,0,6.287,4.188L7.1,1.945A1.986,1.986,0,0,1,9.829,1.3l3.48,2.145A1.986,1.986,0,0,1,13.959,6.173Z"
+                                                transform="translate(-0.241 -0.105)" fill="none" stroke="#000" stroke-miterlimit="10"
+                                                stroke-width="2" />
+                                            <line id="Line_50" data-name="Line 50" y1="5.337" x2="3.289"
+                                                transform="translate(6.395 4.932)" fill="none" stroke="#000" stroke-linecap="round"
+                                                stroke-miterlimit="10" stroke-width="2" />
+                                            <path id="Path_33470" data-name="Path 33470"
+                                                d="M11.727,11.369l7.025,5.053a1.595,1.595,0,1,0,1.668-2.708l-7.672-4"
+                                                transform="translate(-1.224 -1.014)" fill="none" stroke="#000" stroke-linecap="round"
+                                                stroke-miterlimit="10" stroke-width="2" />
+                                            <path id="Rectangle_18100" data-name="Rectangle 18100"
+                                                d="M2.01,0h.456A2.011,2.011,0,0,1,4.478,2.011V7.84A2.011,2.011,0,0,1,2.467,9.851H2.01A2.01,2.01,0,0,1,0,7.841V2.01A2.01,2.01,0,0,1,2.01,0Z"
+                                                transform="translate(0.845 20.961) rotate(-88.36)" fill="none" stroke="#000"
+                                                stroke-miterlimit="10" stroke-width="2" />
+                                        </svg>
+                
+                                    </div>
+                                    <span>Bid</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% if request.user.is_authenticated and not request.user.is_superuser %}
+                                {% url 'user_loan_history' %}{% endif %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <g fill="none" class="nc-icon-wrapper">
+                                                <path
+                                                    d="M2 10s2.005-2.732 3.634-4.362A9 9 0 1 1 12 21a9.004 9.004 0 0 1-8.648-6.5M2 10V4m0 6h6"
+                                                    stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span>History</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'app_lender_wallet' %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg id="wallet-03" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                            <path id="Icon" d="M14,11a.5.5,0,1,1-.5-.5A.5.5,0,0,1,14,11Z" transform="translate(3 3)" fill="none"
+                                                stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                            <path id="Icon-2" data-name="Icon"
+                                                d="M16,18H2a2,2,0,0,1-2-2V2A2,2,0,0,0,2,4H16a2,2,0,0,1,2,2V16A2,2,0,0,1,16,18Z" transform="translate(3 3)"
+                                                fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                            <path id="Icon-3" data-name="Icon" d="M13.5,11h.01M0,2A2,2,0,0,1,2,0H14" transform="translate(3 3)" fill="none"
+                                                stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                        </svg>
+                                    </div>
+                                    <span>Wallet</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'app_cashuu_score' %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <g fill="none" class="nc-icon-wrapper">
+                                                <path
+                                                    d="M5 12a7 7 0 0 1 7-7m4.5 2.5L12 12m10 0c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10zm-9 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                                                    stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span>Cashuu Score</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'app_profile' %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <g fill="none" class="nc-icon-wrapper">
+                                                <path
+                                                    d="M20 21c0-1.396 0-2.093-.172-2.661a4 4 0 0 0-2.667-2.667c-.568-.172-1.265-.172-2.661-.172h-5c-1.396 0-2.093 0-2.661.172a4 4 0 0 0-2.667 2.667C4 18.907 4 19.604 4 21M16.5 7.5a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0z"
+                                                    stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span>My Profile</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'user_accounts' %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <g fill="none" class="nc-icon-wrapper">
+                                                <path
+                                                    d="M22 10H2m9 4H6M2 8.2v7.6c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874C3.52 19 4.08 19 5.2 19h13.6c1.12 0 1.68 0 2.108-.218a2 2 0 0 0 .874-.874C22 17.48 22 16.92 22 15.8V8.2c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C20.48 5 19.92 5 18.8 5H5.2c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874C2 6.52 2 7.08 2 8.2z"
+                                                    stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span>My Banks</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'app_address' %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <g fill="none" class="nc-icon-wrapper">
+                                                <path d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" stroke="#212121" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M12 22c4-4 8-7.582 8-12a8 8 0 1 0-16 0c0 4.418 4 8 8 12z" stroke="#212121"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span>My Address </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'app_notification_sittings' %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <g fill="none" class="nc-icon-wrapper">
+                                                <path
+                                                    d="M15 19a3 3 0 1 1-6 0m4.796-12.761a2.5 2.5 0 1 0-3.593 0M18 11.2c0-1.38-.632-2.702-1.758-3.677C15.117 6.548 13.591 6 12 6c-1.592 0-3.118.548-4.243 1.523C6.632 8.498 6 9.821 6 11.2c0 2.282-.566 3.95-1.272 5.145-.805 1.36-1.207 2.041-1.191 2.204.018.186.051.244.202.355.132.096.794.096 2.119.096h12.284c1.324 0 1.987 0 2.118-.096.151-.11.185-.17.203-.355.016-.163-.387-.843-1.191-2.204C18.566 15.15 18 13.482 18 11.2z"
+                                                    stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span>Notification Setting </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'user_change_password' %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <g fill="none" class="nc-icon-wrapper">
+                                                <path
+                                                    d="M17 9c0-.512-.195-1.024-.586-1.414A1.994 1.994 0 0 0 15 7m0 8a6 6 0 1 0-5.946-5.193c.058.434.087.651.068.789a.853.853 0 0 1-.117.346c-.068.121-.187.24-.426.479l-5.11 5.11c-.173.173-.26.26-.322.36a1 1 0 0 0-.12.29C3 17.296 3 17.418 3 17.663V19.4c0 .56 0 .84.109 1.054a1 1 0 0 0 .437.437C3.76 21 4.04 21 4.6 21H7v-2h2v-2h2l1.58-1.58c.238-.238.357-.357.478-.425a.852.852 0 0 1 .346-.117c.138-.02.355.01.789.068.264.036.533.054.807.054z"
+                                                    stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span>Change Password</span>
+                                </a>
+                            </li>
+                            <hr>
+                            <li>
+                                <a href="{% url 'user_logout' %}" class="dropdown-item">
+                                    <div class="icon-nav">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <g fill="none" class="nc-icon-wrapper">
+                                                <path
+                                                    d="M16 17l5-5m0 0l-5-5m5 5H9m3 5c0 .93 0 1.395-.102 1.776a3 3 0 0 1-2.122 2.122C9.395 21 8.93 21 8 21h-.5c-1.398 0-2.097 0-2.648-.228a3 3 0 0 1-1.624-1.624C3 18.597 3 17.898 3 16.5v-9c0-1.398 0-2.097.228-2.648a3 3 0 0 1 1.624-1.624C5.403 3 6.102 3 7.5 3H8c.93 0 1.395 0 1.776.102a3 3 0 0 1 2.122 2.122C12 5.605 12 6.07 12 7"
+                                                    stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span>Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% else %}
+                <div class="button-header">
+                    <a href="{% url 'user_sign_in' %}" class="btn btn-primary">Log In</a>
+                    <a href="{% url 'borrower_sign_up' %}" class="btn btn-secondary">Sign up</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>

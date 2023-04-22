@@ -1,0 +1,200 @@
+{% load static %}
+<ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'homepage' %}">
+        <div class="sidebar-brand-icon">
+            <img src="{% static 'admin/img/logo/logo2.png' %}">
+        </div>
+        <div class="sidebar-brand-text mx-3">Cashuu</div>
+    </a>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'homepage' %}">
+            <i class="fa fa-university"></i>
+            <span>Dashboard</span></a>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Features
+    </div>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true"
+            aria-controls="collapseUser">
+            <i class="fa fa-users" aria-hidden="true"></i>
+            <span>User Management</span>
+        </a>
+        <div id="collapseUser" class="collapse" aria-labelledby="headingUser" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Users</h6>
+                <a class="collapse-item" href="{% url 'borrower_listing' %}">Users</a>
+                <a class="collapse-item" href="{% url 'store_listing' %}">Store</a>
+                <a class="collapse-item" href="{% url 'pending_users' %}">Pending Users</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWallet" aria-expanded="true"
+            aria-controls="collapseWallet">
+            <i class="fa fa-archive" aria-hidden="true"></i>
+            <span>Wallet Management</span>
+        </a>
+        <div id="collapseWallet" class="collapse" aria-labelledby="headingWallet" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Wallet</h6>
+                <a class="collapse-item" href="{% url 'wallet_listing' %}">Wallet</a>
+                <a class="collapse-item" href="{% url 'edit_wallet_amount' %}">User Wallet Settings</a>
+                <a class="collapse-item" href="{% url 'dwolla_account' %}">Admin Wallet Settings</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLoan" aria-expanded="true"
+            aria-controls="collapseLoan">
+            <i class="fa fa-tasks" aria-hidden="true"></i>
+            <span>Loan Management</span>
+        </a>
+        <div id="collapseLoan" class="collapse" aria-labelledby="headingLoan" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Loan Management</h6>
+                <!-- <a class="collapse-item" href="{% url 'edit_loan' %}">Borrower Loan Limit</a> -->
+                <a class="collapse-item" href="{% url 'edit_loan' %}">Loan</a>
+                <a class="collapse-item" href="{% url 'all_loans' %}">Active Loans</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayment" aria-expanded="true"
+            aria-controls="collapsePayment">
+            <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+            <span>Payment Management</span>
+        </a>
+        <div id="collapsePayment" class="collapse" aria-labelledby="headingPayment" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Payment Management</h6>
+                <!-- <a class="collapse-item" href="{% url 'edit_loan' %}">Borrower Loan Limit</a> -->
+                <a class="collapse-item" href="{% url 'admin_earning' %}">Admin Earning</a>
+                <a class="collapse-item" href="{% url 'lender_earning' %}">Lender Earning</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTier" aria-expanded="true"
+            aria-controls="collapseTier">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>
+            <span>Tier Management</span>
+        </a>
+        <div id="collapseTier" class="collapse" aria-labelledby="headingTier" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Tier Management</h6>
+                <a class="collapse-item" href="{% url 'store_tier_listing' %}">Tier</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFeature" aria-expanded="true"
+            aria-controls="collapseFeature">
+            <i class="fa fa-filter" aria-hidden="true"></i>
+            <span>Feature Management</span>
+        </a>
+        <div id="collapseFeature" class="collapse" aria-labelledby="headingFeature" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Feature Management</h6>
+                <a class="collapse-item" href="{% url 'feature_listing' %}">Features</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSubscriptionPlan" aria-expanded="true"
+            aria-controls="collapseSubscriptionPlan">
+            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+            <span>Subscription Plans</span>
+        </a>
+        <div id="collapseSubscriptionPlan" class="collapse" aria-labelledby="headingSubscriptionPlan" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Subscription Management</h6>
+                <a class="collapse-item" href="{% url 'subscription_plan_listing' %}">User Subscription</a>
+                <a class="collapse-item" href="{% url 'store_subscription_plan_listing' %}">Store Subscription</a>
+                <a class="collapse-item" href="{% url 'active_users' %}">Active Subscription</a>
+            </div>
+        </div>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Global Settings
+    </div>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWeb" aria-expanded="true"
+            aria-controls="collapseWeb">
+            <i class="fa fa-wrench" aria-hidden="true"></i>
+            <span>Web Settings</span>
+        </a>
+        <div id="collapseWeb" class="collapse" aria-labelledby="headingWeb" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header"></h6>
+                <a class="collapse-item" href="{% url 'testimonial_listing' %}">Team</a>
+                <a class="collapse-item" href="{% url 'email_listing' %}">Email Template</a>
+                <a class="collapse-item" href="{% url 'edit_social' %}">Social Account</a>
+                <a class="collapse-item" href="{% url 'fake_email_listing' %}">Block Fake Email</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBlog" aria-expanded="true"
+            aria-controls="collapseBlog">
+            <i class="fa fa-camera-retro" aria-hidden="true"></i>
+            <span>Blog Management</span>
+        </a>
+        <div id="collapseBlog" class="collapse" aria-labelledby="headingBlog" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Blog</h6>
+                <a class="collapse-item" href="{% url 'blog_listing' %}">Blog</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInquiry" aria-expanded="true"
+            aria-controls="collapseInquiry">
+            <i class="fa fa-bullhorn" aria-hidden="true"></i>
+            <span>Inquiry Management</span>
+        </a>
+        <div id="collapseInquiry" class="collapse" aria-labelledby="headingWeb" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header"></h6>
+                <a class="collapse-item" href="{% url 'inquiry_listing' %}">Pending</a>
+                <a class="collapse-item" href="{% url 'inquiry_resolved' %}">Resolved</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCMS" aria-expanded="true"
+            aria-controls="collapseCMS">
+            <i class="fa fa-asterisk" aria-hidden="true"></i>
+            <span>CMS Management</span>
+        </a>
+        <div id="collapseCMS" class="collapse" aria-labelledby="headingWeb" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header"></h6>
+                <a class="collapse-item" href="{% url 'faq_listing' %}">FAQ</a>
+                <a class="collapse-item" href="{% url 'about_listing' %}">About Us</a>
+                <a class="collapse-item" href="{% url 'edit_privacy_policy' %}">Privacy Policy</a>
+                <a class="collapse-item" href="{% url 'edit_homepage_id' %}">HomePage Body</a>
+                <a class="collapse-item" href="{% url 'edit_terms_condition' %}">Terms & Conditions</a>
+                <a class="collapse-item" href="{% url 'edit_youtube_id' %}">HomePage YouTube</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true"
+            aria-controls="collapseReport">
+            <i class="fa fa-flag" aria-hidden="true"></i>
+            <span>Report Management</span>
+        </a>
+        <div id="collapseReport" class="collapse" aria-labelledby="headingWeb" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header"></h6>
+                <a class="collapse-item" href="{% url 'generate_user_report' %}">Users</a>
+            </div>
+        </div>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="version" id="version-ruangadmin"></div>
+</ul>

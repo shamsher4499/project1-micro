@@ -1,0 +1,72 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| Social Account{% endblock %}
+{% block body %}
+<div class="container-login">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="login-form">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Edit Social Accounts</h1>
+                                </div>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group row">
+                                        <label for="inputFacebook" class="col-sm-2 col-form-label">Facebook</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="facebook" value="{{social_data.facebook}}" class="form-control" id="inputFacebook" placeholder="Facebook">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputInstagram" class="col-sm-2 col-form-label">Instagram</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="instagram" value="{{social_data.instagram}}" class="form-control" id="inputInstagram" placeholder="Instagram">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputYouTube" class="col-sm-2 col-form-label">YouTube</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="youtube" value="{{social_data.youtube}}" class="form-control" id="inputYouTube" placeholder="YouTube">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputLinkedin" class="col-sm-2 col-form-label">Linkedin</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="linkedin" value="{{social_data.linkedin}}" class="form-control" id="inputLinkedin" placeholder="Linkedin">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="inputTwitter" class="col-sm-2 col-form-label">Twitter</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="twitter" value="{{social_data.twitter}}" class="form-control" id="inputTwitter" placeholder="Twitter">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                style="margin-right: 2px;">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.19.1/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('desc');
+</script>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| Add Store{% endblock %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'admin/css/custom.css' %}" >
+<div class="container-login">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="login-form">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Create Store</h1>
+                                </div>
+                                <form method="POST" enctype="multipart/form-data" id="myForm">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Store Name <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="name" value="{{data.store_name}}" name="store_name"
+                                            placeholder="Enter Store Name" maxlength="20">
+                                    </div>
+                                    <div class="form-group" style="position: relative;">
+                                        <label>Store Mobile Number <sup style="color: red;">&#9733;</sup></label>
+                                        <select name="calling_code" style="position: absolute;bottom: 9px;left: 12px;">
+                                            {% for code in country_data %}
+                                            <option value="{{ code.dial_code }}${{ code.code }}">{{ code.dial_code }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <input type="text" class="form-control" id="mobile" value="{{data.mobile}}" name="mobile"
+                                            placeholder="Enter Mobile Number" maxlength="10" onkeypress="return event.charCode >= 48 && 
+                                            event.charCode <= 57" style="padding: 0px 95px;">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Store Email <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="email" value="{{data.email}}" name="email"
+                                            aria-describedby="emailHelp" placeholder="Enter Store Email Address"
+                                            value="{{email}}" maxlength="50">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Store Address <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="name" value="{{data.address}}" name="address"
+                                            placeholder="Enter Address" maxlength="100">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Owner Name <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="name" value="{{data.name}}" name="name"
+                                            placeholder="Enter Owner Name" maxlength="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Birth of Date <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="date" class="form-control" id="name" value="{{data.dob}}" name="dob"
+                                            placeholder="Enter DOB YYYY-MM-DD" maxlength="10">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tax ID Number <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="name" value="{{data.tax_id}}" name="tax_id"
+                                            placeholder="Enter Tax ID" maxlength="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Store Open Time <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="time" class="form-control" id="name" value="{{data.store_open_time}}" name="store_open_time"
+                                            placeholder="Enter Open time" maxlength="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Store Close Time <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="time" class="form-control" id="name" value="{{data.store_close_time}}" name="store_close_time"
+                                            placeholder="Enter Close time" maxlength="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Store Open Day <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="name" value="{{data.store_open_day}}" name="store_open_day"
+                                            placeholder="Enter store open day" maxlength="1" minlength="1" onkeypress="return event.charCode >= 48 && 
+                                            event.charCode <= 57">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Business Type <sup style="color: red;">&#9733;</sup></label>
+                                        <select class="form-control" id="EducationBoard" name="business_type"><option>---select---</option>
+                                            <option value="SOLE PROPRIETORSHIP" {% if data.business_type == 'SOLE PROPRIETORSHIP' %}selected{% endif %}>SOLE PROPRIETORSHIP</option>
+                                            <option value="PARTNERSHIPS" {% if data.business_type == 'PARTNERSHIPS' %}selected{% endif %}>PARTNERSHIPS</option>
+                                            <option value="LIMITED LIABILITY COMPANY" {% if data.business_type == 'LIMITED LIABILITY COMPANY' %}selected{% endif %}>LIMITED LIABILITY COMPANY</option>
+                                            <option value="CORPORATION C CORP" {% if data.business_type == 'CORPORATION C CORP' %}selected{% endif %}>CORPORATION C CORP</option>
+                                            <option value="CORPORATION S CORP" {% if data.business_type == 'CORPORATION S CORP' %}selected{% endif %}>CORPORATION S CORP</option>
+                                            <option value="CORPORATION B CORP" {% if data.business_type == 'CORPORATION B CORP' %}selected{% endif %}>CORPORATION B CORP</option>
+                                            <option value="CORPORATION NONPROFIT" {% if data.business_type == 'CORPORATION NONPROFIT' %}selected{% endif %}>CORPORATION NONPROFIT</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Documents <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" name="documents" aria-describedby="emailHelp"
+                                            accept="application/pdf, .pdf" placeholder="Upload document">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Store Image <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" name="profile_pic" aria-describedby="emailHelp"
+                                            accept="image/*" placeholder="Upload store image">
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="showLoader()" style="margin-right: 2px;">Save</button>
+                                        </div>    
+                                        <div class="form-group">
+                                            <a href="{% url 'store_listing' %}"><button type="button" class="btn btn-danger btn-sm">Cancel</button></a>
+                                        </div>
+                                    </div>   
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

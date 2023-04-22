@@ -1,0 +1,68 @@
+version: '3.5'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+      - ./nginx:/etc/nginx/conf.d
+      - ./static:/static
+      - ./media:/media
+      # - .nginx/certificate.crt:/etc/ssl/certificate.crt
+      # - .nginx/privkey.key:/etc/ssl/privkey.key
+    ports:
+      - "80:80"
+      - 443:443
+    depends_on:
+      - web
+
+  celery_beat:
+    build: .
+    command: celery -A microApp beat -l info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    networks:
+      - django_server
+
+  celery_worker:
+    build: .
+    command: celery -A microApp worker -l info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+    networks:
+      - django_server
+
+  redis:
+    image: redis:latest
+    volumes:
+      - redis_data:/data
+    networks:
+      - django_server
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+
+
+volumes:
+  redis_data:
+
+networks:
+  django_server:

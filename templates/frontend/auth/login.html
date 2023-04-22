@@ -1,0 +1,86 @@
+{% extends 'frontend/base.html' %}
+{% load socialaccount %}
+{% load static %}
+{% block title %}| Login{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="site-container">
+          <div class="py-5">
+            <div class="container">
+              <div class="login-box card-shadow">
+                <div class="login-head text-center">
+                  <h4>Login your account</h4>
+                  <p>Use your credentials to access your account.</p>
+                </div>
+                <div class="form-box">
+                  <form class="needs-validation" method="POST" novalidate>
+                    {% csrf_token %}
+                      <div class="form-group">
+                        <label for="login-email" class="form-label">Phone/Email address</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <i data-feather="mail"></i>
+                          </span>
+                          <input type="text" name="email" value="{{data.email}}" class="form-control" id="login-email" aria-describedby="inputGroupPrepend" placeholder="Phone/Email address" required="">
+                          <div class="invalid-feedback">
+                            Please enter right email address.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="passowrd-input">
+                            <i data-feather="lock"></i>
+                          </span>
+                          <input type="password" name="password" class="form-control" id="password" aria-describedby="passowrd-input" placeholder="Your password" required="">
+                          <div class="invalid-feedback">
+                            Please enter password.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="forgot-pass d-flex mb-3">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                          <label class="form-check-label" for="flexCheckDefault">
+                            Remember me
+                          </label>
+                        </div>
+                        <a href="{% url 'app_forget_password1' %}" class="ms-auto">Forgot Password?</a>
+                      </div>
+                      <div class="form-group button-login">
+                        <button class="btn btn-primary w-100" type="submit">
+                          Sign in 
+                          <span><i data-feather="arrow-right"></i></span>
+                        </button>
+                      </div>
+                      <!-- <div class="or-divider">
+                        <span>OR SIGN IN WITH</span>
+                      </div>
+                      <div class="social-btn row">
+                        <div class="col-md-6">
+                          <a href="javascript:;" class="btn btn-fb w-100">
+                            Facebook
+                            <i><img src="{%  static 'frontend/assets/images/fb.svg' %}"></i>
+                          </a>
+                        </div>
+                        <div class="col-md-6">
+                          <a href="{% provider_login_url 'google'%}" class="btn btn-google w-100">
+                            Google
+                            <i><img src="{%  static 'frontend/assets/images/google.svg' %}"></i>
+                          </a>
+                        </div>
+                      </div> -->
+                      <div class="new-user-text">
+                        <p>Don't have an account?</p>
+                        <div class="login-sg-btns mt-2">
+                          <p><a href="{% url 'borrower_sign_up' %}">Register</a></p>
+                        </div>
+                      </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

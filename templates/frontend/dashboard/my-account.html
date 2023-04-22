@@ -1,0 +1,120 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| My Bank{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+<link href="{% static 'admin/css/custom.css' %}" rel="stylesheet">
+
+<div class="dashboard-main">
+  {% include 'frontend/include/sidebar.html' %}
+  <div class="dashboard-container">
+    <div class="dashboard-head">
+      <h4>My Banks </h4>
+      {% url 'plaid_add_bank' as plaid_add_bank_url %}
+      {% comment %} data-bs-toggle="offcanvas" data-bs-target="#add-new-add" aria-controls="add-new-add" {% endcomment %}
+      <button class="btn btn-black ms-auto" id="plaid-link-button" data-link="{{ plaid_add_bank_url }}">Add New
+        Bank</button>
+    </div>
+    <div class="dashboard-container-in">
+      <div class="row address-page">
+        {% for dwolla_bank_account in active_bank_accounts %}
+        <div class="col-md-4">
+          <div class="card-shadow card-shadow-in card-box">
+           <div class="card-top-des">
+             <div class="card-img">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="55" height="55"><path d="M2 20H22V22H2V20ZM4 12H6V19H4V12ZM9 12H11V19H9V12ZM13 12H15V19H13V12ZM18 12H20V19H18V12ZM2 7L12 2L22 7V11H2V7ZM4 8.23607V9H20V8.23607L12 4.23607L4 8.23607ZM12 8C11.4477 8 11 7.55228 11 7C11 6.44772 11.4477 6 12 6C12.5523 6 13 6.44772 13 7C13 7.55228 12.5523 8 12 8Z" fill="#000"></path></svg>
+            </div>
+            <figcaption>
+             <h6>{{ dwolla_bank_account.name }}</h6>
+             <p>{{ dwolla_bank_account.status }}</p>
+            </figcaption>  
+            </div>   
+            <div class="btn-adds mt-4">
+              <button class="btn btn-primary me-2 delete-account-btn" data-href="{% url 'delete_plaid_account' dwolla_bank_account.id %}">Delete</button>
+              {% comment %} <a href="javascript:;" class="btn btn-secondary">Edit</a> {% endcomment %}
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-md-12">
+          <div class="card-shadow card-shadow-in">
+            <div class="text-center">
+              <p>No Bank Account</p>
+            </div>
+          </div>
+        </div>
+        
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to Delete?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+        <a href="" class="btn btn-primary" id="account-delete-btn">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  $('.delete-account-btn').on('click', function() {
+    const url = $(this).data('href')
+    $('#account-delete-btn').attr('href', url)
+    $('#deleteModal').modal('show')
+  })
+</script>
+<script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+<script>
+  
+  const plaidLinkHandler = Plaid.create({
+    token: '{{ plaid_link_token }}',
+    onSuccess: (public_token, metadata) => {
+      // Handle the success response
+      const header = {
+        "Content-Type": "application/json"
+      }
+      const body = JSON.stringify({
+        'public_token': public_token,
+        'account_id': metadata.account_id,
+        'bank_name': metadata.institution.name,
+        'user_slug': "{{ request.user.slug }}"
+      })
+      fetch("{% url 'add_plaid_bank_account_for_web' %}", {
+        method: "POST",
+        header: header,
+        body: body
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        myToast(data.message, (data.status ? SUCCESS: ERROR))
+        window.location.reload()
+      })
+    },
+    onExit: (err, metadata) => {
+      // Handle the exit response
+      $(document).find("#loader").remove()
+      window.location.reload()
+    }
+  });
+
+  document.getElementById('plaid-link-button').addEventListener('click', function (e) {
+    plaidLinkHandler.open();
+    $(`<div id="loader" style="position: fixed; z-index: 99;"><div class="spinner-grow text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+      </div></div>`).appendTo('body')
+  });
+</script>
+{% endblock %}

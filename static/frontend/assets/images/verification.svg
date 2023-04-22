@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="38" height="42" viewBox="0 0 38 42">
+  <g id="Group_67705" data-name="Group 67705" transform="translate(-28 -125)">
+    <g id="Group_67640" data-name="Group 67640" transform="translate(-2 -2)">
+      <rect id="passcode-lock" width="38" height="38" transform="translate(30 127)" fill="none"/>
+      <path id="Icon" d="M14.25,15.833H5.067c-1.773,0-2.66,0-3.338-.345A3.167,3.167,0,0,1,.345,14.1C0,13.427,0,12.54,0,10.767v-5.7c0-1.773,0-2.66.345-3.338A3.167,3.167,0,0,1,1.729.345C2.406,0,3.293,0,5.067,0H26.6c1.774,0,2.66,0,3.338.345a3.167,3.167,0,0,1,1.384,1.384c.345.677.345,1.564.345,3.338V9.5" transform="translate(33.167 134.917)" fill="none" stroke="#3cc2fa" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"/>
+      <circle id="Ellipse_9" data-name="Ellipse 9" cx="2" cy="2" r="2" transform="translate(38 141)" fill="#3cc2fa"/>
+      <circle id="Ellipse_10" data-name="Ellipse 10" cx="2" cy="2" r="2" transform="translate(44 141)" fill="#3cc2fa"/>
+      <circle id="Ellipse_11" data-name="Ellipse 11" cx="2" cy="2" r="2" transform="translate(50 141)" fill="#3cc2fa"/>
+      <circle id="Ellipse_12" data-name="Ellipse 12" cx="2" cy="2" r="2" transform="translate(56 141)" fill="#3cc2fa"/>
+    </g>
+    <g id="check-circle-broken" transform="translate(42 144)">
+      <rect id="check-circle-broken-2" data-name="check-circle-broken" width="23" height="23" fill="none"/>
+      <path id="Icon-2" data-name="Icon" d="M19,8.631v.874A9.5,9.5,0,1,1,13.367.822" transform="translate(2 2)" fill="none" stroke="#f54583" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"/>
+      <path id="Icon-3" data-name="Icon" d="M20,2,10,12.01l-3-3" transform="translate(1 1.714)" fill="none" stroke="#f54583" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"/>
+    </g>
+  </g>
+</svg>

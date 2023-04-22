@@ -1,0 +1,45 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| View Lender{% endblock %}
+{% block body %}
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{{user.name}} Information</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'pending_users' %}">Pending Listing</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{user.name}} Information</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <!-- Simple Tables -->
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">{{user.name}} Information</h6>
+                </div>
+
+                <div class="detail-info-content">
+                    <ul>
+                        <li><span>Name</span>   :   {{user.name}}</li>
+                        <li><span>Email</span>   :   {{user.email}}</li>
+                        <li><span>Mobile</span>   :   {{user.mobile}}</li>
+                        <li><span>Calling Code</span>   :   {{user.calling_code}}</li>
+                        <li><span>Country Code</span>   :   {{user.country_code}}</li>
+                        <li><span>Email Status</span>   :   {% if user.is_verified == True %}Verified{% else %}Not Verified{% endif %}</li>
+                        <li><span>Document</span> : <a class="document-link-item" href="{{user.document.url}}"></a><a
+                                href="{{user.document.url}}" attributes-list download>Download</a></li>
+                    </ul>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </div>
+    <!--Row-->
+
+    <!-- Modal Logout -->
+
+
+</div>
+{% endblock %}

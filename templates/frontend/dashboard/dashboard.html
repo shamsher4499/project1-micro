@@ -1,0 +1,641 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Dashboard{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="dashboard-main">
+          {% include 'frontend/include/sidebar.html' %}
+          <div class="dashboard-container">
+            <div class="dashboard-head">
+              <h4>Dashboard</h4>
+            </div>
+            <div class="dashboard-container-in">
+              <ul class="nav tabing-site nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link {% if request.GET.activeTab == 'lender' or not request.GET.activeTab %}active{% endif %}" data-bs-toggle="pill" data-bs-target="#Lender" type="button" role="tab" aria-selected="true">Lender</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link {% if request.GET.activeTab == 'borrower' %}active{% endif %}" data-bs-toggle="pill" data-bs-target="#Borrower" type="button" role="tab" aria-selected="false" tabindex="-1">Borrower</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link {% if request.GET.activeTab == 'lending-box' %}active{% endif %}" data-bs-toggle="pill" data-bs-target="#Lending-box" type="button" role="tab" aria-selected="false" tabindex="-1">Lending box</button>
+                </li>
+              </ul>
+              <div class="tab-content" id="pills-tabContent">
+                <div id="Lender" class="tab-pane fade {% if request.GET.activeTab == 'lender' or not request.GET.activeTab %}show active{% endif %}" role="tabpanel">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card-shadow-in mb-4">
+                        <div class="budget-calculator">
+                          <div class="budget-calculator-head">
+                            <h4>Budget Calculator</h4>
+                            <p>Gross monthly income</p>
+                          </div>
+                          <form class="needs-validation" novalidate>
+                            <div class="form-group">
+                              <input type="number" class="form-control" id="login-email" aria-describedby="inputGroupPrepend" required="" placeholder="Enter amount">
+                              <div class="invalid-feedback">
+                              Please enter amount.
+                              </div>
+                              <div class="valid-feedback">
+                              Looks good! 
+                              </div>
+                            </div>
+                            <div class="row add-remove-box">
+                              <div class="col">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" required="" placeholder="Name">
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" required="" placeholder="Enter amount">
+                                </div>
+                              </div>
+                              <div class="col plus-btn">
+                                <a href="javascript:;" class="btn btn-icon">
+                                  <i data-feather="plus"></i>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="row add-remove-box">
+                              <div class="col">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" required="" placeholder="Name">
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" required="" placeholder="Enter amount">
+                                </div>
+                              </div>
+                              <div class="col plus-btn">
+                                <a href="javascript:;" class="btn btn-icon btn-line-remove">
+                                  <i data-feather="x"></i>
+                                </a>
+                              </div>
+                            </div>
+                            <div class="row add-remove-box">
+                              <div class="col">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" required="" placeholder="Name">
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" required="" placeholder="Enter amount">
+                                </div>
+                              </div>
+                              <div class="col plus-btn">
+                                <a href="javascript:;" class="btn btn-icon btn-line-remove">
+                                  <i data-feather="x"></i>
+                                </a>
+                              </div>
+                            </div>
+
+                            <button class="btn btn-primary w-100 mb-4" type="submit">Submit</button>
+                          </form>
+                          <h4>Total Saving : $700</h4>
+                        </div>
+                      </div>
+                      <div class="card-shadow-in">
+                        <div class="loan-form">
+                          <form method="POST" action="{% url 'app_create_bid_request' %}" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            <div class="loan-row mb-4">
+                              <div class="loan-form-head mb-2">
+                                <h5>Select request type</h5>
+                              </div>
+                              <div class="form-group">
+                                {% comment %} <div class="form-check form-check-radio d-inline">
+                                  <input class="form-check-input" type="radio" name="request_type" id="flexRadioDefault1">
+                                  <label class="form-check-label" for="flexRadioDefault1">
+                                    Directly
+                                  </label>
+                                </div> {% endcomment %}
+                                <div class="form-check form-check-radio d-inline">
+                                  <input class="form-check-input" type="radio" name="request_type" value="BID" id="flexRadioDefault2" checked>
+                                  <label class="form-check-label" for="flexRadioDefault2">
+                                    Bid
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="loan-row mb-4">
+                              <div class="loan-form-head mb-2">
+                                <h5>Select borrowed amount</h5>
+                                <p>Move the slider to select your borrowed amount</p>
+                              </div>
+                              <div class="form-group">
+                                <input type="text" id="loan-amount-inp" name="amount" class="form-control" required="" placeholder="Enter amount" readonly>
+                              </div>
+                              <div class="range-slider">
+                                <input type="range" class="form-range" id="loanAmountRange" min="1" max="{{ loan_management.amount }}">
+                                <div class="min-max-box">
+                                 <span>Min : $1</span>
+                                 <span>Max : ${{ loan_management.amount }}</span> 
+                                </div>
+                              </div>
+                            </div>
+                            <div class="loan-row mb-4">
+                              <div class="loan-form-head mb-2">
+                                <h5>Select flat fee</h5>
+                              </div>
+                              <div class="form-group">
+                                <input type="text" id="loan-interest" name="fee" class="form-control" max="{{ loan_management.interest }}" required="" placeholder="Enter fee">
+                              </div>
+                              {% comment %} <div class="form-group">
+                                <select id="loan-interest" class="form-select form-control" required>
+                                  <option selected disabled value="">Select flat fee</option>
+                                  <option value="1">1%</option>
+                                  <option value="2">2%</option>
+                                  <option value="3">3%</option>
+                                  <option value="4">4%</option>
+                                  <option value="5">5%</option>
+                                  <option value="6">6%</option>
+                                  <option value="7">7%</option>
+                                  <option value="8">8%</option>
+                                  <option value="9">9%</option>
+                                  <option value="10">10%</option>
+                                  <option value="11">11%</option>
+                                  <option value="14">14%</option>
+                                </select>
+                              </div> {% endcomment %}
+                            </div>
+                            <div class="loan-row mb-4">
+                              <div class="loan-form-head mb-2">
+                                <h5>Select tenure</h5>
+                                <p>Choose your collateral term in months</p>
+                              </div>
+                              <div class="form-group">
+                                <input type="text" id="loan-tenure-inp" name="tenure" class="form-control" required="" placeholder="Enter month" readonly>
+                              </div>
+                              <div class="range-slider">
+                                <input type="range" class="form-range" id="loanTenureRange" min="1" max="{{ loan_management.tenure_month }}" required="">
+                                <div class="min-max-box">
+                                  <span>Min : 1 Month</span>
+                                  <span>Max : {{ loan_management.tenure_month }} Months</span> 
+                                 </div>
+                              </div>
+                              <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required="">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                  I Accept the  <a href="javascript:;">Agreement </a>
+                                </label>
+
+                                <a href="javascript:;" id="view-emi" class="float-end">View EMI</a>
+                              </div>
+                            </div>
+                            <button class="btn btn-primary w-100" type="submit" id="bid-request-submit-btn">Submit</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="Borrower" class="tab-pane fade {% if request.GET.activeTab == 'borrower' %}show active{% endif %}" role="tabpanel">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card-shadow-in mb-4">
+                        <div class="loan-box">
+                          {% for i in borrowers_request %}
+                          <div class="loan-box-row">
+                            <div class="loan-box-info d-flex align-items-center">
+                              <div class="loan-user-info d-flex me-4 align-items-center">
+                                <div class="user-img me-3">
+                                  <a href="javascript:;">
+                                    <img src="{% if i.user.profile_pic %}{{i.user.profile_pic.url}}{% else %}{% endif %}">
+                                  </a>
+                                </div>
+                                <div class="loan-user-name">
+                                  {% if i.request_type == 'DIRECT' %}<span class="tag-text">Direct request</span>{% else %}{% endif %}
+                                  <h4><a href="javascript:;">{{i.user.name}}</a></h4>
+                                  <time>{{i.created}}</time>
+                                </div>
+                              </div>
+                              <div class="interest-info">
+                                <div class="interest-info-in">
+                                  <p>Interest rate</p>
+                                  <span>{{i.fee}}%</span>
+                                </div>
+                              </div>
+                              <div class="interest-info">
+                                <div class="interest-info-in">
+                                  <p>Tenure</p>
+                                  <span>{{i.tenure}} months</span>
+                                </div>
+                              </div>
+                              <div class="ms-auto d-flex align-items-center">
+                                <div class="amount-text me-4">${{i.amount}}</div>
+                                <div class="bid-action">
+                                  <a href="javascript:;" class="btn btn-primary">Accept</a>
+                                  <a href="javascript:;" class="btn btn-secondary">Reject</a>
+                                  <a href="javascript:;" class="btn btn-border-primary">Reply</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {% empty %}
+                          <div class="text-center">
+                            <p>No request found</p>
+                          </div>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="Lending-box" class="tab-pane fade {% if request.GET.activeTab == 'lending-box' %}show active{% endif %}" role="tabpanel">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card-shadow-in mb-4">
+                        <div class="loan-box shop-box">
+                          {% for lending_box in lending_boxes %}
+                          <div class="loan-box-row">
+                            <div class="loan-box-info d-flex align-items-center">
+                              <div class="loan-user-info d-flex me-4">
+                                <div class="user-img me-3">
+                                  <a href="javascript:;">
+                                    <img src="{% if lending_box.user.profile_pic %}{{ lending_box.user.profile_pic.url }}{% else %}{% static 'frontend/assets/images/user.png' %}{% endif %}">
+                                  </a>
+                                </div>
+                                <div class="show-info">
+                                  {% if lending_box.store_category == "NEW" %}
+                                  <span class="tag-text tag-new">New</span>
+                                  {% elif lending_box.store_category == "PRO" %}
+                                  <span class="tag-text tag-pro">Pro</span>
+                                  {% elif lending_box.store_category == "PREMIUM" %}
+                                  <span class="tag-text tag-premium">Premium</span>
+                                  {% endif %}
+                                  <h4><a href="javascript:;">{{ lending_box.store_name }}</a> <span>Since {{ lending_box.dob|date:"Y" }}</span></h4>
+                                  <div class="ratings">
+                                    <div class="ratings-star">
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                    </div>
+                                    <span>{{ lending_box.get_review_count }} review</span>
+                                  </div>
+                                  <div class="location-info">
+                                    <a href="javascript:;"><i data-feather="map-pin"></i> {{ lending_box.address }}</a>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                              <div class="ms-auto text-end align-items-center">
+                                <div class="bid-action">
+                                  <a href="{% url 'app_lending_box_detail' lending_box.slug %}" class="btn btn-primary">View shop</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          {% empty %}
+                          <div class="text-center">
+                            <p>No request found</p>
+                          </div>
+                          {% endfor %}
+
+                          {% comment %} <div class="loan-box-row">
+                            <div class="loan-box-info d-flex align-items-center">
+                              <div class="loan-user-info d-flex me-4">
+                                <div class="user-img me-3">
+                                  <a href="javascript:;">
+                                    <img src="assets/images/user.png">
+                                  </a>
+                                </div>
+                                <div class="show-info">
+                                  <span class="tag-text tag-new">New</span>
+                                  <h4><a href="javascript:;">H&M Shop</a> <span>Since 2022</span></h4>
+                                  <div class="ratings">
+                                    <div class="ratings-star">
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                    </div>
+                                    <span>251 review</span>
+                                  </div>
+                                  <div class="location-info">
+                                    <a href="javascript:;"><i data-feather="map-pin"></i> Spark park 11-12, London, Near rose garden 5208</a>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                              <div class="ms-auto text-end align-items-center">
+                                <div class="bid-action">
+                                  <a href="javascript:;" class="btn btn-primary">View shop</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="loan-box-row">
+                            <div class="loan-box-info d-flex align-items-center">
+                              <div class="loan-user-info d-flex me-4">
+                                <div class="user-img me-3">
+                                  <a href="javascript:;">
+                                    <img src="assets/images/user.png">
+                                  </a>
+                                </div>
+                                <div class="show-info">
+                                  <span class="tag-text tag-pro">Pro</span>
+                                  <h4><a href="javascript:;">H&M Shop</a> <span>Since 2022</span></h4>
+                                  <div class="ratings">
+                                    <div class="ratings-star">
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                    </div>
+                                    <span>251 review</span>
+                                  </div>
+                                  <div class="location-info">
+                                    <a href="javascript:;"><i data-feather="map-pin"></i> Spark park 11-12, London, Near rose garden 5208</a>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                              <div class="ms-auto text-end align-items-center">
+                                <div class="bid-action">
+                                  <a href="javascript:;" class="btn btn-primary">View shop</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="loan-box-row">
+                            <div class="loan-box-info d-flex align-items-center">
+                              <div class="loan-user-info d-flex me-4">
+                                <div class="user-img me-3">
+                                  <a href="javascript:;">
+                                    <img src="assets/images/user.png">
+                                  </a>
+                                </div>
+                                <div class="show-info">
+                                  <span class="tag-text tag-premium">Premium</span>
+                                  <h4><a href="javascript:;">H&M Shop</a> <span>Since 2022</span></h4>
+                                  <div class="ratings">
+                                    <div class="ratings-star">
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                    </div>
+                                    <span>251 review</span>
+                                  </div>
+                                  <div class="location-info">
+                                    <a href="javascript:;"><i data-feather="map-pin"></i> Spark park 11-12, London, Near rose garden 5208</a>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                              <div class="ms-auto text-end align-items-center">
+                                <div class="bid-action">
+                                  <a href="javascript:;" class="btn btn-primary">View shop</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="loan-box-row">
+                            <div class="loan-box-info d-flex align-items-center">
+                              <div class="loan-user-info d-flex me-4">
+                                <div class="user-img me-3">
+                                  <a href="javascript:;">
+                                    <img src="assets/images/user.png">
+                                  </a>
+                                </div>
+                                <div class="show-info">
+                                  <span class="tag-text tag-new">New</span>
+                                  <h4><a href="javascript:;">H&M Shop</a> <span>Since 2022</span></h4>
+                                  <div class="ratings">
+                                    <div class="ratings-star">
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                    </div>
+                                    <span>251 review</span>
+                                  </div>
+                                  <div class="location-info">
+                                    <a href="javascript:;"><i data-feather="map-pin"></i> Spark park 11-12, London, Near rose garden 5208</a>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                              <div class="ms-auto text-end align-items-center">
+                                <div class="bid-action">
+                                  <a href="javascript:;" class="btn btn-primary">View shop</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="loan-box-row">
+                            <div class="loan-box-info d-flex align-items-center">
+                              <div class="loan-user-info d-flex me-4">
+                                <div class="user-img me-3">
+                                  <a href="javascript:;">
+                                    <img src="assets/images/user.png">
+                                  </a>
+                                </div>
+                                <div class="show-info">
+                                  <span class="tag-text tag-new">New</span>
+                                  <h4><a href="javascript:;">H&M Shop</a> <span>Since 2022</span></h4>
+                                  <div class="ratings">
+                                    <div class="ratings-star">
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                      <i class="ri-star-fill"></i>
+                                    </div>
+                                    <span>251 review</span>
+                                  </div>
+                                  <div class="location-info">
+                                    <a href="javascript:;"><i data-feather="map-pin"></i> Spark park 11-12, London, Near rose garden 5208</a>
+                                  </div>
+                                  
+                                </div>
+                              </div>
+                              <div class="ms-auto text-end align-items-center">
+                                <div class="bid-action">
+                                  <a href="javascript:;" class="btn btn-primary">View shop</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div> {% endcomment %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% if lending_boxes %}
+                    <nav aria-label="..." class="pagination-nav">
+                        <ul class="pagination">
+                          {% if lending_boxes.has_previous %} {# whether the previous page exists #}
+                          <li class="page-item">
+                            <a class="page-link" href="?page={{lending_boxes.previous_page_number}}&activeTab=lending-box" tabindex="-1">Previous</a>
+                          </li>
+                          {% endif %}
+                          <li class="page-item active">
+                              <a class="page-link" href="#">{{ lending_boxes.number }} <span class="sr-only">(current)</span></a>
+                          </li>
+                          {% if lending_boxes.has_next %} {# whether the next page exists #}
+                          <li class="page-item">
+                              <a class="page-link" href="?page={{lending_boxes.next_page_number}}&activeTab=lending-box">Next</a>
+                          </li>
+                          {% endif %}
+                        </ul>
+                    </nav>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+        aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to Delete?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="" class="btn btn-primary" id="user-select-btn">Delete</a>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="viewEMIModal" tabindex="-1" role="dialog" aria-labelledby="emiModalLabelLogout" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="emiModalLabelLogout">EMI</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="emi-info" class="row text-center"></div>
+                    <hr>
+                    <div id="emi-data"></div>
+                </div>
+                {% comment %} <div class="modal-footer"> {% endcomment %}
+                  
+                    {% comment %} <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="" class="btn btn-primary" id="user-select-btn">Delete</a> {% endcomment %}
+                {% comment %} </div> {% endcomment %}
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block script %}
+<script>
+    $('.select-users').on('click', function () {
+      $('#userModal').modal('show')
+      $('#user-select-btn').attr('href', $(this).attr('href'))
+    })
+
+    $('#view-emi').on('click', function () {
+      fetch("{% url 'emi_calculator_for_web' %}", {
+        method: 'POST',
+        body: JSON.stringify({
+          amount: $('#loan-amount-inp').val(),
+          fee: $('#loan-interest').val(),
+          tenure: $('#loan-tenure-inp').val(),
+          user_id: "{{ request.user.id }}",
+        }),
+      }).then(function(response) {
+        return response.json()
+      }).then(function(data) {
+        if(data.status) {
+          const payload = data['payload']
+          const emiInfo = `
+              <div class="col-4">
+                <div class="col-12">
+                  <p class="">Per Month EMI: </p>
+                </div>
+                <div class="col-12">
+                  <strong>${payload['loan_calculation']['per_month_emi']}</strong>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="col-12">
+                  <p class="">Interest: </p>
+                </div>
+                <div class="col-12">
+                  <strong>${payload['loan_calculation']['interest']}</strong>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="col-12">
+                  <p class="">You Will Pay: </p>
+                </div>
+                <div class="col-12">
+                  <strong>${payload['loan_calculation']['you_will_pay']}</strong>
+                </div>
+              </div>`
+
+          let emiData = ''
+          payload['emi'].forEach(function(obj, index) {
+            emiData += `<div class="row py-2">
+            <div class="col-6">
+              <div class="col-12">
+                <p class="">EMI Date: </p>
+              </div>
+              <div class="col-12">
+                <strong>${obj.emi_date}</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="col-12">
+                <p class="">EMI Price: </p>
+              </div>
+              <div class="col-12">
+                <strong>${obj.emi_price}</strong>
+              </div>
+            </div></div>`
+          })
+
+          $('#emi-data').html('')
+          $('#emi-info').html('')
+          $('#emi-info').append(emiInfo)
+          $('#emi-data').append(emiData)
+          $('#viewEMIModal').modal('show')
+        } else {
+          myToast(data.message, ERROR)
+        }
+      })
+    })
+
+    $('#loan-amount-inp').val($('#loanAmountRange').val())
+    $('#loanAmountRange').on('change', function() {
+      $('#loan-amount-inp').val($(this).val())
+    })
+
+    $('#loan-tenure-inp').val($('#loanTenureRange').val())
+    $('#loanTenureRange').on('change', function() {
+      $('#loan-tenure-inp').val($(this).val())
+    })
+
+    $('#loan-interest').on('input', function() {
+      const interest = parseFloat($(this).val())
+      const maxInterest = parseFloat("{{ loan_management.interest }}")
+      if(interest > maxInterest) {
+        myToast("Fee Should be less than {{ loan_management.interest }}", ERROR)
+        $('#bid-request-submit-btn').attr('type', 'button')
+        $('#bid-request-submit-btn').prop('disabled', true)
+        return false
+      }
+      $('#bid-request-submit-btn').attr('type', 'submit')
+      $('#bid-request-submit-btn').prop('disabled', false)
+      return true
+    })
+</script>
+{% endblock %}

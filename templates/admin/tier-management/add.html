@@ -1,0 +1,76 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| Add Tier{% endblock %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'admin/css/custom.css' %}" >
+<div class="container-login">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="login-form">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Tier</h1>
+                                </div>
+                                <form method="POST" id="myForm">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Tier Category <sup style="color: red;">&#9733;</sup></label>
+                                        <select class="form-control" id="EducationBoard" name="tier"><option>---select---</option>
+                                            <option value="TIER 1" {% if data.tier == 'TIER 1' %}selected{% endif %}>TIER 1</option>
+                                            <option value="TIER 2" {% if data.tier == 'TIER 2' %}selected{% endif %}>TIER 2</option>
+                                            <option value="TIER 3" {% if data.tier == 'TIER 3' %}selected{% endif %}>TIER 3</option>
+                                        </select> 
+                                    </div>
+                                    <div class="form-group" style="position: relative;">
+                                        <label>Starting Price <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="mobile" value="{{data.starting_price}}" name="starting_price"
+                                            placeholder="Enter Starting price" maxlength="8" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Ending Price <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="email" value="{{data.end_price}}" name="end_price"
+                                            aria-describedby="emailHelp" placeholder="Enter Ending price"
+                                             maxlength="50">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Interest <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="email" value="{{data.interest}}" name="interest"
+                                            aria-describedby="emailHelp" placeholder="Enter interest"
+                                             maxlength="50">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Interval Month <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="email" value="{{data.month}}" name="month"
+                                            aria-describedby="emailHelp" placeholder="Enter max month"
+                                             maxlength="50">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="email" value="{{data.desc}}" name="desc"
+                                            aria-describedby="emailHelp" placeholder="Enter description"
+                                             maxlength="200">
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="showLoader()" style="margin-right: 2px;">Save</button>
+                                        </div>    
+                                        <div class="form-group">
+                                            <a href="{% url 'store_tier_listing' %}"><button type="button" class="btn btn-danger btn-sm">Cancel</button></a>
+                                        </div>
+                                    </div>   
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

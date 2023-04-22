@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <!----------------include header----------------->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link href="{% static 'admin/img/logo/logo.png' %}" rel="icon">
+        <title>AdminPanel {% block title %}| Dashboard{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        <script type="text/javascript" src="{% static 'admin/js/mycustom.js' %}"></script>
+        <link href="{% static 'admin/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'admin/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'admin/css/ruang-admin.min.css' %}" rel="stylesheet">
+    </head>
+<body id="page-top">
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'success'%}
+    <script>
+        myToast("{{message}}", SUCCESS);
+    </script>
+    {% elif message.tags == 'error' %}
+    <script>
+        myToast("{{message|safe}}", ERROR);
+    </script>
+    {% elif message.tags == 'info' %}
+    <script>
+        myToast("{{message|safe}}", INFO);
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <div id="wrapper">
+        <!-- Sidebar -->
+    <!----------------include sidebar---------------->
+    {% include 'admin/include/sidebar.html' %}
+        <!-- Sidebar -->
+<div id="content-wrapper" class="d-flex flex-column">
+    <div id="content">
+        <!-- Navbar -->
+    <!----------------include navbar----------------->
+    {% include 'admin/include/navbar.html' %}
+        <!-- Navbar -->
+
+        <!-- Body -->
+    <!----------------include body------------------->
+    {% block body %}{% endblock %}
+        <!-- Body -->
+
+    <!----------------include footer----------------->
+    
+    </div>
+</div>
+{% include 'admin/include/footer.html' %}
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+    <!----------------include Scripts----------------->
+    {% include 'admin/include/scripts.html' %}
+    {% block script %}{% endblock %}
+</body>
+</html>

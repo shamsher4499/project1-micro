@@ -1,0 +1,119 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| Edit Homepage{% endblock %}
+{% block body %}
+<div class="container-login">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="login-form">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Edit Homepage</h1>
+                                </div>
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Name <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" value="{{homepage.name}}"
+                                            id="exampleInputFirstName" name="name" placeholder="Enter Name"
+                                            maxlength="100">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image Top <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" accept="image/png, image/jpeg" name="image1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-id-icon" id="email-body">Description Top <sup style="color: red;">&#9733;</sup></label>
+                                        <textarea value="" name="desc1">{{homepage.desc1|safe}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>About us Name <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" value="{{homepage.name2}}" id="exampleInputFirstName" name="name2"
+                                            placeholder="Enter Name" maxlength="100">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image About us <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" accept="image/png, image/jpeg"
+                                            name="image2">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-id-icon" id="email-body">About us Description <sup style="color: red;">&#9733;</sup></label>
+                                        <textarea value="" name="desc2">{{homepage.desc2|safe}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Right Top Name <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" value="{{homepage.name3}}" id="exampleInputFirstName" name="name3"
+                                            placeholder="Enter Name" maxlength="100">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Right Top Image <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" accept="image/png, image/jpeg" name="image3">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-id-icon" id="email-body">Right Top Description <sup style="color: red;">&#9733;</sup></label>
+                                        <textarea value="" name="desc3">{{homepage.desc3|safe}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Left Mid Name <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" value="{{homepage.name4}}" id="exampleInputFirstName" name="name4"
+                                            placeholder="Enter Name" maxlength="100">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Left Mid Image <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" accept="image/png, image/jpeg" name="image4">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-id-icon" id="email-body">Left Mid Description <sup style="color: red;">&#9733;</sup></label>
+                                        <textarea value="" name="desc4">{{homepage.desc4|safe}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Right Bottom Name <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" value="{{homepage.name5}}" id="exampleInputFirstName" name="name5"
+                                            placeholder="Enter Name" maxlength="100">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Right Bottom Image <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" accept="image/png, image/jpeg" name="image5">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-id-icon" id="email-body">Right Bottom Description <sup style="color: red;">&#9733;</sup></label>
+                                        <textarea value="" name="desc5">{{homepage.desc5|safe}}</textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                style="margin-right: 2px;">Save</button>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <a href="{% url 'about_listing' %}"><button type="button"
+                                                    class="btn btn-danger btn-sm"
+                                                    style="margin-left: 5px;">Cancel</button></a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.19.1/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('desc1');
+    CKEDITOR.replace('desc2');
+    CKEDITOR.replace('desc3');
+    CKEDITOR.replace('desc4');
+    CKEDITOR.replace('desc5');
+</script>
+{% endblock %}

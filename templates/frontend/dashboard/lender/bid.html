@@ -1,0 +1,82 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Bid{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="dashboard-main">
+          {% include 'frontend/include/sidebar.html' %}
+          <div class="dashboard-container">
+            <div class="dashboard-head">
+              <h4>Bid</h4>
+            </div>
+            <div class="dashboard-container-in">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card-shadow-in">
+                    <div class="loan-box">
+                      <div class="loan-box-row">
+                        <div class="loan-box-info d-flex align-items-center">
+                          <div class="loan-user-info d-flex me-4 align-items-center">
+                            <div class="user-img me-3">
+                              <a href="javascript:;">
+                                <img src="{% static 'frontend/assets/images/user.png' %}">
+                              </a>
+                            </div>
+                            <div class="loan-user-name">
+                              <h4><a href="javascript:;">Joshua Hughes</a></h4>
+                              <time>27 Oct 2022</time>
+                            </div>
+                          </div>
+                          <div class="interest-info">
+                            <div class="interest-info-in">
+                              <p>Interest rate</p>
+                              <span>14.7%</span>
+                            </div>
+                          </div>
+                          <div class="ms-auto d-flex align-items-center">
+                            <div class="amount-text me-4">$500.00</div>
+                            <div class="bid-action">
+                              <a href="javascript:;" class="btn btn-primary">Accept</a>
+                              <a href="javascript:;" class="btn btn-secondary">Reject</a>
+                              <a href="javascript:;" class="btn btn-border-primary" data-bs-toggle="offcanvas" data-bs-target="#reply-bid" aria-controls="reply-bid">Reply</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="loan-box-row">
+                        <div class="loan-box-info d-flex align-items-center">
+                          <div class="loan-user-info d-flex me-4 align-items-center">
+                            <div class="user-img me-3">
+                              <a href="javascript:;">
+                                <img src="{% static 'frontend/assets/images/user.png' %}">
+                              </a>
+                            </div>
+                            <div class="loan-user-name">
+                              <h4><a href="javascript:;">Joshua Hughes</a></h4>
+                              <time>27 Oct 2022</time>
+                            </div>
+                          </div>
+                          <div class="interest-info">
+                            <div class="interest-info-in">
+                              <p>Interest rate</p>
+                              <span>14.7%</span>
+                            </div>
+                          </div>
+                          <div class="ms-auto d-flex align-items-center">
+                            <div class="amount-text me-4">$500.00</div>
+                            <div class="bid-action">
+                              <a href="javascript:;" class="btn btn-primary">Accept</a>
+                              <a href="javascript:;" class="btn btn-secondary">Reject</a>
+                              <a href="javascript:;" class="btn btn-border-primary" data-bs-toggle="offcanvas" data-bs-target="#reply-bid" aria-controls="reply-bid">Reply</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

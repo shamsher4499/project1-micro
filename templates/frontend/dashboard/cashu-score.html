@@ -1,0 +1,19 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Cashuu Score{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="dashboard-main">
+          {% include 'frontend/include/sidebar.html' %}
+          <div class="dashboard-container">
+            <div class="dashboard-head">
+              <h4>Cashuu Score</h4>
+            </div>
+            <div class="dashboard-container-in">
+              <div class="card-shadow card-sm">
+                <img src="{% static 'frontend/assets/images/score.png' %}" width="80%" class="m-auto d-block">
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

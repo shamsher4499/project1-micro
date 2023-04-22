@@ -1,0 +1,180 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| Profile{% endblock %}
+{% block body %}
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Profile</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Profile</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <!-- Simple Tables -->
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+                </div>
+                <div class="container-xl px-4 mt-4">
+                    <hr class="mt-0 mb-4">
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <!-- Account details card-->
+                            <div class="card mb-4">
+                                <div class="card-header">Account Details</div>
+                                <div class="card-body">
+                                    <form method="POST" id="adminProfile">
+                                        {% csrf_token %}
+                                        <div class="row gx-3 mb-3">
+                                            <!-- Form Group (first name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputFirstName">First
+                                                    name</label>
+                                                <input class="form-control" id="inputFirstName" type="text"
+                                                    name="first_name" placeholder="Enter your first name"
+                                                    value="{{admin.first_name}}" maxlength="15">
+                                            </div>
+                                            <!-- Form Group (last name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputLastName">Last
+                                                    name</label>
+                                                <input class="form-control" id="inputLastName" type="text"
+                                                    name="last_name" placeholder="Enter your last name"
+                                                    value="{{admin.last_name}}" maxlength="15">
+                                            </div>
+                                        </div>
+                                        <!-- Form Row        -->
+                                        <div class="row gx-3 mb-3">
+                                            <!-- Form Group (organization name)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputOrgName">Email</label>
+                                                <input class="form-control" id="inputOrgName" type="text" name="email"
+                                                    placeholder="Enter your organization name" value="{{admin.email}}"
+                                                    readonly>
+                                            </div>
+                                            <!-- Form Group (location)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputLocation">Mobile</label>
+                                                <input class="form-control" id="inputLocation" type="text" name="mobile"
+                                                    placeholder="Enter your Mobile" value="{{admin.mobile}}"
+                                                    minlength="10" maxlength="12" onpaste="return false;"
+                                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputEmailAddress1">Last Login</label>
+                                                <input class="form-control" id="inputEmailAddress1"
+                                                    value="{{admin.last_login}}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="hidden" value="form1" name="form1">
+                                            <button type="button" class="btn btn-primary save-profile">
+                                                Save Changes
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <!-- Account details card-->
+                            <div class="card mb-4">
+                                <div class="card-header">Change Password</div>
+                                <div class="card-body">
+                                    <form method="POST" id="changePassword">
+                                        {% csrf_token %}
+                                        <div class="row gx-3 mb-3">
+                                        </div>
+                                        <div class="row gx-3 mb-3">
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputOrgName">Current Password</label>
+                                                <input class="form-control" id="inputOrgName" type="password"
+                                                    name="current_password" placeholder="Enter your Current Password"
+                                                    value="" onfocus="this.value=''" onpaste="return false;">
+                                            </div>
+                                            <!-- Form Group (location)-->
+                                            <div class="col-md-6">
+                                                <label class="small mb-1" for="inputLocation">New Password</label>
+                                                <input class="form-control" id="inputLocation" type="password"
+                                                    name="new_password" placeholder="Enter your New Password" value=""
+                                                    onfocus="this.value=''" onpaste="return false;">
+                                            </div>
+                                        </div>
+                                        <!-- Form Group (email address)-->
+                                        <input type="hidden" name="form2" value="form2">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary change-password">Change
+                                                Password</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to update Profile?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="profile-save-btn">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to Change Password?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="change-password-btn">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    let form = {}
+    $('.save-profile').on('click', function () {
+        $('#deleteModal').modal('show')
+    })
+    $(document).on('click', '#profile-save-btn', function() {
+        $('#adminProfile').submit()
+    })
+    $('.change-password').on('click', function () {
+            $('#changePasswordModal').modal('show')
+        })
+        $(document).on('click', '#change-password-btn', function () {
+            $('#changePassword').submit()
+        })
+</script>
+{% endblock %}

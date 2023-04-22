@@ -1,0 +1,252 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block body %}
+<div class="site-container">
+    <section class="home-banner">
+        <div class="left-shape">
+            <div class="home-shape-in l-gry"></div>
+            <div class="home-shape-in l-blue"></div>
+            <div class="home-shape-in l-pink"></div>
+        </div>
+        <div class="right-shape">
+            <div class="home-shape-in l-gry"></div>
+            <div class="home-shape-in l-pink"></div>
+            <div class="home-shape-in l-blue"></div>
+        </div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="home-banner-text">
+                        <h1>{{homepage_body.name}}</h1>
+                        <p>{{homepage_body.desc1|safe}}</p>
+                        <a href="{% if request.user.is_authenticated %}{% url 'app_dashboard' %}{% else %}{% url 'user_sign_in' %}{% endif %}"
+                        class="btn btn-primary">Start Investing</a>
+                    </div>
+                </div>
+                <div class="col-md-5 ms-auto text-end">
+                    <figure>
+                        <img src="{{homepage_body.image1.url}}">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="how-it-work section-padding" id="how-its-works">
+        <div class="container">
+            <div class="headings">
+                <span>How it works</span>
+                <h2>Create an account in 5 minutes </h2>
+            </div>
+            <div class="row">
+                <div class="col-md-3 how-it-work-box">
+                    <article>
+                        <figure>
+                            <i class="ri-ball-pen-fill"></i>
+                        </figure>
+                        <figcaption>
+                            <h4>Register</h4>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of
+                                a page when looking at its layout.</p>
+                        </figcaption>
+                    </article>
+                </div>
+                <div class="col-md-3 how-it-work-box">
+                    <article>
+                        <figure>
+                            <i class="ri-hand-coin-fill"></i>
+                        </figure>
+                        <figcaption>
+                            <h4>Choose investment strategy</h4>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of
+                                a page when looking at its layout.</p>
+                        </figcaption>
+                    </article>
+                </div>
+                <div class="col-md-3 how-it-work-box">
+                    <article>
+                        <figure>
+                            <i class="ri-funds-fill"></i>
+                        </figure>
+                        <figcaption>
+                            <h4>We allocate your funds</h4>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of
+                                a page when looking at its layout.</p>
+                        </figcaption>
+                    </article>
+                </div>
+                <div class="col-md-3 how-it-work-box">
+                    <article>
+                        <figure>
+                            <i class="ri-send-plane-fill"></i>
+                        </figure>
+                        <figcaption>
+                            <h4>Reinvest, or withdraw </h4>
+                            <p>It is a long established fact that a reader will be distracted by the readable content of
+                                a page when looking at its layout.</p>
+                        </figcaption>
+                    </article>
+                </div>
+            </div>
+            <div class="video-how">
+                <img src="{{youtube.thumbnail.url}}">
+                <div class="video-how-btn" data-bs-toggle="modal" data-bs-target="#videomodal">
+                    <a href="javascript:;"><i class="ri-play-fill"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="about-home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-5 ms-auto">
+                    <figure>
+                        <img src="{{homepage_body.image2.url}}">
+                    </figure>
+                </div>
+                <div class="col-md-6">
+                    <div class="headings">
+                        <span>About us</span>
+                        <h2>{{homepage_body.name2}}</h2>
+                        <p>{{homepage_body.desc2|safe}}</p>
+                        <a href="{% url 'app_about_us' %}" class="btn btn-white mt-5">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="app-info section-padding">
+        <div class="container">
+            <div class="app-info-box app-info-box1">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-md-5">
+                        <div class="headings">
+                            <h2>{{homepage_body.name3}} </h2>
+                            <p>{{homepage_body.desc3|safe}} </p>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <figure>
+                            <img src="{{homepage_body.image3.url}}" width="100%">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+            <div class="app-info-box app-info-box2">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-md-5">
+                        <figure>
+                            <img src="{{homepage_body.image4.url}}" width="100%">
+                        </figure>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="headings">
+                            <h2>{{homepage_body.name4}} </h2>
+                            <p>{{homepage_body.desc4|safe}} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="app-info-box app-info-box1">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-md-5">
+                        <div class="headings">
+                            <h2>{{homepage_body.name5}}</h2>
+                            <p>{{homepage_body.desc5|safe}} </p>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <figure>
+                            <img src="{{homepage_body.image5.url}}" width="100%">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sec-secure section-padding pt-0">
+        <div class="container">
+            <div class="sec-secure-text text-center">
+                <img src="{%  static 'frontend/assets/images/secure.svg' %}">
+                <h4>Your finances, safe and secure</h4>
+                <p>With 256-bit encryption and multi-factor authentication, we protect your info as if it’s our own.</p>
+            </div>
+        </div>
+    </section>
+    <section class="faq-sec section-padding">
+        <div class="container">
+            <div class="headings text-center w-50 m-auto mb-5">
+                <span>FAQs</span>
+                <h2>Frequently Asked Questions</h2>
+                <p>Lorem Ipsum is simply dummy text of the printing and type indus orem Ipsum has been the
+                    standard dummy.</p>
+            </div>
+            <div class="accordion" id="accordionExample">
+                {% for i in faq %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{i.id}}">
+                        <button class="accordion-button {% if forloop.first %}{% else %}collapsed{% endif %}" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse{{i.id}}" aria-expanded="true" aria-controls="collapse{{i.id}}">
+                            {{i.name}}
+                        </button>
+                    </h2>
+                    <div id="collapse{{i.id}}" class="accordion-collapse collapse {% if forloop.first %}show{% else %}{% endif %}" aria-labelledby="heading{{i.id}}"
+                        data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            {{i.answer|safe}}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section class="blog-list section-padding">
+        <div class="container">
+            <div class="headings d-flex align-items-center mb-5">
+                <div class="headings-ins w-50">
+                    <span>Blogs</span>
+                    <h2>Read latest story</h2>
+                    <p>Lorem Ipsum is simply dummy text of the printing and type setting indus orem Ipsum has been the
+                        standard dummy.</p>
+                </div>
+                <a href="{% url 'app_blog' %}" class="btn btn-secondary ms-auto">View all blogs</a>
+            </div>
+            <div class="row">
+                {% for i in blogs %}
+                <div class="col-md-4 blog-box">
+                    <article>
+                        <figure>
+                            <a href="{% url 'app_blog_detail' i.blog_slug i.slug %}">
+                                <img src="{{i.image.url}}">
+                            </a>
+                        </figure>
+                        <figcaption>
+                            <span>{{i.created}}</span>
+                            <h4>
+                                <a href="{% url 'app_blog_detail' i.blog_slug i.slug %}">{{i.name}} </a>
+                            </h4>
+                            <a href="{% url 'app_blog' %}" class="link-btn">Read more <i class="ri-arrow-right-up-line"></i></a>
+                        </figcaption>
+                    </article>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+</div>
+<!-- modal-video -->
+<div class="modal fade" id="videomodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-body">
+                <iframe width="560" height="315" id="video" src="https://www.youtube.com/embed/{{youtube.youtube_id}}"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

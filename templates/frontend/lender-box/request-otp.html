@@ -1,0 +1,28 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| OTP Request{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+<div class="site-container">
+    <div class="py-5">
+        <div class="container">
+            <div class="login-box card-shadow">
+                <div class="login-head text-center">
+                    <figure>
+                        <img src="{% static 'frontend/assets/images/verification.svg' %}">
+                    </figure>
+                    <h4>Please send the otp for user information</h4>
+                </div>
+                <div class="form-box">
+                    <form class="needs-validation verification-box" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group mb-0">
+                            <button class="btn btn-primary w-100" type="submit">Send OTP</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

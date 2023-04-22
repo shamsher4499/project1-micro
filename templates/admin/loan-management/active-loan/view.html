@@ -1,0 +1,91 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| View Loan{% endblock %}
+{% block body %}
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Loan Information</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'all_loans' %}">Loans</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{loan_view.user.name}} Information</li>
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <!-- Simple Tables -->
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">{{loan_view.user.name}} Information</h6>
+                </div>
+
+                <div class="detail-info-content">
+                    <ul>
+                        <li><span>Borrower Name</span> : {{loan_view.user.name}}</li>
+                        <li><span>Lender Name</span> : {{loan_view.lender.name}}</li>
+                        <li><span>Loan Type</span> : {{loan_view.request_type}}</li>
+                        <li><span>Amount</span> : {{loan_view.amount}}</li>
+                        <li><span>Fee</span> : {{loan_view.fee}}</li>
+                        <li><span>Tenure</span> : {{loan_view.tenure}}</li>
+                        <li><span>Request date</span> : {{loan_view.created}}</li>
+                        <li><span>Approve date</span> : {% if loan_view.approve %}{{loan_view.approve}}{% else %}None{% endif %}</li>
+                        <li><span>Loan Status</span> : {% if loan_view.completed == False %}Active{% else %}Completed{% endif %}</li>
+                    </ul>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <!-- Simple Tables -->
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Loan calculation</h6>
+                </div>
+
+                <div class="detail-info-content">
+                    <ul>
+                        <li><span>Per Month EMI</span> : {{api_data.loan_calculation.per_month_emi}}</li>
+                        <li><span>Total Interest you will be pay</span> : {{api_data.loan_calculation.interest}}</li>
+                        <li><span>Total Amount you will be pay</span> : {{api_data.loan_calculation.you_will_pay}}</li>
+                    </ul>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        <div class="col-lg-12 mb-4">
+            <div class="card">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Emi calculation</h6>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Sr.</th>
+                                <th>Emi Date</th>
+                                <th>Emi Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in api_data.emi %}
+                            <tr class="{% cycle 'light' 'dark' %}">
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.emi_date}}</td>
+                                <td>{{i.emi_price}}</td>
+                            </tr>        
+                            {% endfor %}
+                        </tbody>
+                    </table>    
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </div>
+    <!--Row-->
+
+    <!-- Modal Logout -->
+
+
+</div>
+{% endblock %}

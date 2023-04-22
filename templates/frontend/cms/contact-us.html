@@ -1,0 +1,52 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Contact Us{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'frontend/assets/css/custom.css' %}">
+        <div class="site-container">
+          <div class="py-5">
+            <div class="container">
+              <div class="login-box card-shadow">
+                <div class="login-head text-center">
+                  <figure>
+                    <img src="{% static 'frontend/assets/images/contact.svg' %}">
+                  </figure>
+                  <h4>Get in touch</h4>
+                  <p>Always within your reach</p>
+                </div>
+                <div class="form-box">
+                  <form class="needs-validation" method="POST" id="myForm" novalidate>
+                    {% csrf_token %}
+                      <div class="form-group">
+                        <label class="form-label">Full name</label>
+                        <input type="text" name="name" class="form-control" placeholder="Enter full name">
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">Email address</label>
+                        <input type="text" name="email" class="form-control" placeholder="Enter email">
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">Subject</label>
+                        <input type="text" name="subject" class="form-control" placeholder="Enter subject">
+                      </div>
+                      <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea class="form-control" name="message" placeholder="Enter your message for us here..."></textarea>
+                      </div>
+                      <div class="form-group mb-0">
+                        <button class="btn btn-primary w-100" type="submit" onclick="showLoader()">Submit</button>
+                      </div>
+                  </form>
+                  <div class="social-icon d-flex justify-content-center mt-4">
+                    <a href="javascript:;"><i class="ri-facebook-fill"></i></a>
+                    <a href="javascript:;"><i class="ri-instagram-line"></i></a>
+                    <a href="javascript:;"><i class="ri-linkedin-fill"></i></a>
+                    <a href="javascript:;"><i class="ri-twitter-fill"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

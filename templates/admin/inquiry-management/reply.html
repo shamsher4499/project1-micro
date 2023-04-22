@@ -1,0 +1,78 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| Reply Inquiry{% endblock %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'admin/css/custom.css' %}">
+<div class="container-login">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="login-form">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Reply</h1>
+                                </div>
+                                <form method="POST" id="myForm">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Name </label>
+                                        <input type="text" class="form-control" id="first_name"
+                                            value="{{inquiry.name}}" name="first_name"
+                                            placeholder="Enter First Name" maxlength="20" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email </label>
+                                        <input type="text" class="form-control" id="email"
+                                            value="{{inquiry.email}}" name="email" aria-describedby="emailHelp"
+                                            placeholder="Enter Email Address" maxlength="50" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Subject </label>
+                                        <input type="text" class="form-control" id="first_name" value="{{inquiry.subject}}" name="first_name"
+                                            placeholder="Enter First Name" maxlength="20" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Message </label>
+                                        <input type="text" class="form-control" id="first_name" value="{{inquiry.message}}" name="first_name"
+                                            placeholder="Enter First Name" maxlength="20" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Created </label>
+                                        <input type="text" class="form-control" id="first_name" value="{{inquiry.created}}" name="first_name"
+                                            placeholder="Enter First Name" maxlength="20" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-id-icon" id="email-body">Answer <sup style="color: red;">&#9733;</sup></label>
+                                        <textarea value="{{inquiry.answer}}" name="answer">{{inquiry.answer|safe}}</textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="showLoader()"
+                                                style="margin-right: 2px;">Save</button>
+                                        </div>
+                                        <div class="form-group">
+                                            <a href="{% url 'borrower_listing' %}"><button type="button"
+                                                    class="btn btn-danger btn-sm">Cancel</button></a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.19.1/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('answer');
+</script>
+{% endblock %}

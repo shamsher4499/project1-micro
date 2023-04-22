@@ -1,0 +1,138 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Bid Request{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="dashboard-main">
+          {% include 'frontend/include/sidebar.html' %}
+          <div class="dashboard-container">
+            <div class="dashboard-head">
+              <h4>Bid</h4>
+            </div>
+            <div class="dashboard-container-in">
+              <div class="card-shadow-in">
+                <ul class="nav tabing-site nav-pills mb-3" id="pills-tab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#Lender" type="button" role="tab" aria-selected="true">Lender</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#Borrower" type="button" role="tab" aria-selected="false" tabindex="-1">Borrower</button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                  <div id="Lender" class="tab-pane fade show active" role="tabpanel">
+                    <div class="loan-box">
+                      {% for bid_request in lender_request %}
+                      <div class="loan-box-row">
+                        <div class="loan-box-info d-flex align-items-center">
+                          <div class="loan-user-info d-flex me-4 align-items-center">
+                            <div class="user-img me-3">
+                              <a href="javascript:;">
+                                <img src="{% if bid_request.user.profile_pic %}{{bid_request.user.profile_pic.url}}{% endif %}">
+                              </a>
+                            </div>
+                            <div class="loan-user-name">
+                              {% if bid_request.request_type == 'DIRECT' %}
+                              <span class="tag-text">Direct request</span>
+                              {% endif %}
+                              <h4><a href="javascript:;">{{bid_request.user.name}}</a></h4>
+                              <time>{{bid_request.created}}</time>
+                            </div>
+                          </div>
+                          <div class="interest-info">
+                            <div class="interest-info-in">
+                              <p>Interest rate</p>
+                              <span>{{bid_request.fee}}%</span>
+                            </div>
+                          </div>
+                          <div class="ms-auto d-flex align-items-center">
+                            <div class="amount-text me-4">${{bid_request.amount}}</div>
+                            <div class="bid-action">
+                              <a href="javascript:;" class="btn btn-primary">Accept</a>
+                              <button data-href="{% url 'app_reject_bid_request' bid_request.slug %}" class="btn btn-secondary reject-request">Reject</button>
+                              <!-- <a href="javascript:;" class="btn btn-border-primary" data-bs-toggle="offcanvas" data-bs-target="#reply-bid" aria-controls="reply-bid">Reply</a> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% empty %}
+                      <div class="text-center">
+                        <p>No request found</p>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div id="Borrower" class="tab-pane fade" role="tabpanel">
+                    <div class="loan-box">
+                      {% for bid_request in borrower_request %}
+                      <div class="loan-box-row">
+                        <div class="loan-box-info d-flex align-items-center">
+                          <div class="loan-user-info d-flex me-4 align-items-center">
+                            <div class="user-img me-3">
+                              <a href="javascript:;">
+                                <img src="{% if bid_request.lender.profile_pic %}{{bid_request.lender.profile_pic.url}}{% endif %}">
+                              </a>
+                            </div>
+                            <div class="loan-user-name">
+                              <h4><a href="javascript:;">{{bid_request.lender.name}}</a></h4>
+                              <time>{{bid_request.created}}</time>
+                            </div>
+                          </div>
+                          <div class="interest-info">
+                            <div class="interest-info-in">
+                              <p>Interest rate</p>
+                              <span>{{bid_request.fee}}%</span>
+                            </div>
+                          </div>
+                          <div class="ms-auto d-flex align-items-center">
+                            <div class="amount-text me-4">${{bid_request.amount}}</div>
+                            <div class="bid-action">
+                              {% if bid_request.approve == True %}
+                              <a href="javascript:;" class="btn btn-primary">Accept</a>
+                              {% endif %}
+                              <a href="javascript:;" class="btn btn-secondary">Reject</a>
+                              <!-- <a href="javascript:;" class="btn btn-border-primary" data-bs-toggle="offcanvas" data-bs-target="#reply-bid" aria-controls="reply-bid">Reply</a> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% empty %}
+                      <div class="text-center">
+                        <p>No Request</p>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="rejectBidRequestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+        aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to Reject?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="" class="btn btn-primary" id="reject-btn">Reject</a>
+                </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}
+{% block script %}
+<script>
+  $('.reject-request').on('click', function() {
+    const url = $(this).data('href')
+    $('#reject-btn').attr('href', url)
+    $('#rejectBidRequestModal').modal('show')
+  })
+</script>
+{% endblock %}

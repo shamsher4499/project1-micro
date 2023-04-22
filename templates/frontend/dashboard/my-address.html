@@ -1,0 +1,163 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Address{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="dashboard-main">
+          {% include 'frontend/include/sidebar.html' %}
+          <div class="dashboard-container">
+            <div class="dashboard-head">
+              <h4>My Address </h4>
+              <button class="btn btn-black ms-auto" data-bs-toggle="offcanvas" data-bs-target="#add-new-add" aria-controls="add-new-add">Add new address</button>
+            </div>
+            <div class="dashboard-container-in">
+              <div class="row address-page">
+                {% for i in user_address %}
+                <div class="col-md-4">
+                  <div class="card-shadow card-shadow-in">
+                    <h4 class="add-tag">{{i.title}}</h4>
+                    <p>{{i.address}}, {{i.area}}, {{i.landmark}} {{i.zipcode}}</p>
+                    <p>{{i.city}}, {{i.state}}</p>
+                    <p>+01{{i.phone_number}}</p>
+                    <div class="btn-adds mt-4">
+                      <button href="{% url 'app_delete_address' i.slug %}" class="btn btn-primary me-2 delete-address">Delete</button>
+                      <a href="{% url 'app_edit_address' i.slug %}" class="btn btn-secondary">Edit</a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+    <!-- Add-address -->
+    <form method="POST" action="{% url 'app_address' %}">
+      {% csrf_token %}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="add-new-add" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Add New Address</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="form-group">
+          <label for="formFile" class="form-label">Name of Addresses</label>
+          <input type="text" name="title" value="{{data.title}}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="formFile" class="form-label">Address</label>
+          <input type="text" name="address" value="{{data.address}}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="formFile" class="form-label">Area</label>
+          <input type="text" name="area" value="{{data.area}}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="formFile" class="form-label">City</label>
+          <input type="text" name="city" value="{{data.city}}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="formFile" class="form-label">State</label>
+          <input type="text" name="state" value="{{data.state}}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="formFile" class="form-label">Zip Code</label>
+          <input type="text" name="zip_code" value="{{data.zip_code}}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="formFile" class="form-label">Landmark</label>
+          <input type="text" name="landmark" value="{{data.landmark}}" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="formFile" class="form-label">Phone Number</label>
+          <input type="text" name="phone_number" value="{{data.phone_number}}" class="form-control">
+        </div>
+        <button class="btn btn-primary w-100" type="submit">Submit</button>
+      </div>
+    </div>
+    </form>
+
+    <form method="POST" action="{% if edit_address_slug %}{% url 'app_edit_address' edit_address_slug %}{% endif %}">
+      {% csrf_token %}
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="update-address" aria-labelledby="offcanvasRightLabel1">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasRightLabel1">Update Address</h5>
+          <a href="{% url 'app_address' %}" class="btn-close" aria-label="Close"></a>
+        </div>
+        <div class="offcanvas-body">
+          <div class="form-group">
+            <label class="form-label">Name of Addresses</label>
+            <input type="text" name="title" value="{% if edit_address.title %}{{edit_address.title}}{% else %}{{ edit_address.address_title }}{% endif %}" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <input type="text" name="address" value="{{edit_address.address}}" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Area</label>
+            <input type="text" name="area" value="{{edit_address.area}}" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input type="text" name="city" value="{{edit_address.city}}" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label">State</label>
+            <input type="text" name="state" value="{{edit_address.state}}" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Zip Code</label>
+            <input type="text" name="zip_code" value="{% if edit_address.zip_code %}{{edit_address.zip_code}}{% else %}{{ edit_address.zipcode }}{% endif %}" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Landmark</label>
+            <input type="text" name="landmark" value="{{edit_address.landmark}}" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="text" name="phone_number" value="{{edit_address.phone_number}}" class="form-control">
+          </div>
+          <button class="btn btn-primary w-100" name="update-form" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to Delete?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+            <a href="" class="btn btn-primary" id="address-delete-btn">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block script %}
+<script>
+  {% if show_add_new_modal %}
+    const addNewAddOffCanvas = new bootstrap.Offcanvas(document.getElementById("add-new-add"))
+    addNewAddOffCanvas.show()
+  {% endif %}
+
+  {% if show_edit_address_model %}
+    const addUpdateAddressOffCanvas = new bootstrap.Offcanvas(document.getElementById("update-address"))
+    addUpdateAddressOffCanvas.show()
+  {% endif %}
+  $('.delete-address').on('click', function (e) {
+    e.preventDefault()
+    $('#deleteModal').modal('show')
+    $('#address-delete-btn').attr('href', $(this).attr('href'))
+  })
+</script>
+{% endblock %}

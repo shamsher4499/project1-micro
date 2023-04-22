@@ -1,0 +1,82 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| Edit About Us{% endblock %}
+{% block body %}
+<div class="container-login">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="login-form">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Edit About Us</h1>
+                                </div>
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Name <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" value="{{about_us.name}}"
+                                            id="exampleInputFirstName" name="name" placeholder="Enter Name"
+                                            maxlength="100">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image Top <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" accept="image/png, image/jpeg"
+                                            name="image-top">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image Left <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" accept="image/png, image/jpeg" name="image-left">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Image Right <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control" accept="image/png, image/jpeg" name="image-right">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-id-icon" id="email-body">Description Top <sup
+                                                style="color: red;">&#9733;</sup></label>
+                                        <textarea value="" name="desc-top">{{about_us.desc1|safe}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-id-icon" id="email-body">Description Left<sup style="color: red;">&#9733;</sup></label>
+                                        <textarea value="" name="desc-left">{{about_us.desc2|safe}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-id-icon" id="email-body">Description Right<sup style="color: red;">&#9733;</sup></label>
+                                        <textarea value="" name="desc-right">{{about_us.desc3|safe}}</textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                style="margin-right: 2px;">Save</button>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <a href="{% url 'about_listing' %}"><button type="button"
+                                                    class="btn btn-danger btn-sm"
+                                                    style="margin-left: 5px;">Cancel</button></a>
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.19.1/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('desc-top');
+    CKEDITOR.replace('desc-left');
+    CKEDITOR.replace('desc-right');
+</script>
+{% endblock %}

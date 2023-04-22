@@ -1,0 +1,36 @@
+django-cors-headers
+# django-debug-toolbar
+Django==3.2
+djangorestframework
+djangorestframework-simplejwt
+Pillow
+plaid-python==5.0.0
+PyJWT
+python-decouple
+requests
+uWSGI==2.0.20
+# psycopg2>=2.8
+redis>=3.5
+celery>=5.0
+stripe
+django-session-timeout
+gunicorn==20.1.0
+pyqrcode
+pypng
+pytest-django==4.5.2 
+numerize
+psycopg2-binary==2.9.5
+django-allauth
+xlsxwriter
+PyPDF2
+ImageHash
+django-jsonfield
+python-dateutil
+dwollav2
+reportlab
+django-celery-beat
+django-celery-results
+drf-yasg
+flower
+pyfcm
+prometheus_client

@@ -1,0 +1,39 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block title %}| Blog{% endblock %}
+{% block bodyclass %}class="inner-pages"{% endblock %}
+{% block body %}
+        <div class="site-container site-container-white">
+          <div class="inner-head d-flex align-items-center justify-content-center">
+            <div class="container">
+              <h2>Blog</h2>
+            </div>
+            <img src="{% static 'frontend/assets/images/shape-left.svg' %}" class="shape-left">
+            <img src="{% static 'frontend/assets/images/shape-right.svg' %}" class="shape-right">
+          </div>
+          <div class="cms-pages-wrap py-5">
+            <div class="container">
+              <div class="row">
+                {% for i in blog %}
+                <div class="col-md-4 blog-box">
+                  <article>
+                    <figure>
+                      <a href="{% url 'app_blog_detail' i.blog_slug i.slug %}">
+                        <img src="{{i.image.url}}">
+                      </a>
+                    </figure>
+                    <figcaption>
+                      <span>{{i.created}}</span>
+                      <h4>
+                        <a href="{% url 'app_blog_detail' i.blog_slug i.slug %}">{{i.name}} </a>
+                      </h4>
+                      <a href="{% url 'app_blog_detail' i.blog_slug i.slug %}" class="link-btn">Read more <i class="ri-arrow-right-up-line"></i></a>
+                    </figcaption>
+                  </article>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock %}

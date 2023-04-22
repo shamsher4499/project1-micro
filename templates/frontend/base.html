@@ -1,0 +1,62 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cashuu {% block title %}| Homepage{% endblock %}</title>
+    <!--responsive-meta-here--> 
+    <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="{% static 'frontend/assets/images/logo/logo.png' %}" rel="icon">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="text/javascript" src="{% static 'frontend/assets/js/mycustom.js' %}"></script>
+    <!--responsive-meta-end-->
+    <link href="{%  static 'frontend/assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="{%  static 'frontend/assets/css/owl.carousel.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{%  static 'frontend/assets/fonts/remixicon.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{%  static 'frontend/assets/css/fontawesome-all.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{%  static 'frontend/assets/css/fontawesome.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{%  static 'frontend/assets/css/style.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{%  static 'admin/css/custom.css' %}" rel="stylesheet" />
+    
+    <!-- <link rel="stylesheet" href="css/responsive.css" rel="stylesheet"/> -->
+</head>
+<body {% block bodyclass %}{% endblock %}>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'success'%}
+    <script>
+        myToast("{{message}}", SUCCESS);
+    </script>
+    {% elif message.tags == 'error' %}
+    <script>
+        myToast("{{message|safe}}", ERROR);
+    </script>
+    {% elif message.tags == 'info' %}
+    <script>
+        myToast("{{message|safe}}", INFO);
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <div class="wraper-main">
+        <!---------------------------------------navbar--------------------------------------->
+                    {% include 'frontend/include/navbar.html' %}
+        <!---------------------------------------end-navbar----------------------------------->
+
+        <!---------------------------------------body----------------------------------------->
+                    {% block body %}{% endblock %}
+        <!---------------------------------------end-body------------------------------------->
+
+        <!---------------------------------------footer--------------------------------------->
+                    {% include 'frontend/include/footer.html' %}
+        <!---------------------------------------end-footer----------------------------------->
+
+        <!---------------------------------------scripts--------------------------------------->
+                    {% include 'frontend/include/scripts.html' %}
+                    {% block script %}{% endblock %}
+        <!---------------------------------------end-scripts----------------------------------->
+</body>
+</html>

@@ -1,0 +1,73 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}| Add Subscription Plan{% endblock %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'admin/css/custom.css' %}" >
+<div class="container-login">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="login-form">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Subscription Plan</h1>
+                                </div>
+                                <form method="POST" id="myForm">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label>Plan Name <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="name" value="{{data.name}}" name="name"
+                                            placeholder="Enter Plan Name" maxlength="50">
+                                    </div>
+                                    <div class="form-group" style="position: relative;">
+                                        <label>Plan Price <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="text" class="form-control" id="mobile" value="{{data.price}}" name="price"
+                                            placeholder="Enter Price" minlength="2" maxlength="4" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Plan Interval <sup style="color: red;">&#9733;</sup></label>
+                                        <select class="form-control" id="choices" name="interval">
+                                            <option value="MONTHLY">Monthly</option>
+                                            <option value="ANNUALLY">Annually</option>
+                                        </select>
+                                    </div>
+                                    <!-- <div class="form-group">
+                                        <label>Recurring Type <sup style="color: red;">&#9733;</sup></label>
+                                        <select class="form-control" id="choices" name="recurring_type">
+                                            <option value="AUTO">Auto</option>
+                                            <option value="MANUALLY">Manually</option>
+                                        </select>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="email-id-icon" id="email-body">Description <sup style="color: red;">&#9733;</sup></label>
+                                        <textarea value="{{data.desc}}" name="desc">{{data.desc|safe}}</textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary btn-sm" onclick="showLoader()" style="margin-right: 2px;">Save</button>
+                                        </div>    
+                                        <div class="form-group">
+                                            <a href="{% url 'store_subscription_plan_listing' %}"><button type="button" class="btn btn-danger btn-sm">Cancel</button></a>
+                                        </div>
+                                    </div>   
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.19.1/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('desc');
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% load static %}
+<footer>
+    <div class="footer-top section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="footer-logo-area">
+                        <div class="footer-logo">
+                            <a href="{% url 'home' %}">
+                                <img src="{%  static 'frontend/assets/images/logo-footer.png' %}">
+                            </a>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry lorem Ipsum has
+                                been the industrys standard dummy text ever.</p>
+                        </div>
+                        <div class="social-icon">
+                            <a href="javascript:;"><i class="ri-facebook-fill"></i></a>
+                            <a href="javascript:;"><i class="ri-instagram-line"></i></a>
+                            <a href="javascript:;"><i class="ri-twitter-fill"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 ms-auto">
+                    <h4 class="footer-head">Useful Links</h4>
+                    <ul class="footer-link">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'app_about_us' %}">About Us</a></li>
+                        <li><a href="{% url 'app_blog' %}">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="footer-head">Help & Suport</h4>
+                    <ul class="footer-link">
+                        <li><a href="{% url 'app_faq' %}">FAQs</a></li>
+                        <li><a href="{% url 'app_term_conditions' %}">Terms & conditions</a></li>
+                        <li><a href="{% url 'app_privacy_policy' %}">Privacy policy</a></li>
+                        <li><a href="{% url 'app_contact_us' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h4 class="footer-head">Download App</h4>
+                    <div class="footer-app">
+                        <a href="javascript:;">
+                            <img src="{%  static 'frontend/assets/images/play-store.svg' %}">
+                        </a>
+                        <a href="javascript:;">
+                            <img src="{%  static 'frontend/assets/images/app-store.svg' %}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright text-center">
+        <!-- <span>© Copyrights 2022 Cashuu. All rights reserved.</span> -->
+        <span>Copyright &copy;
+            <script> document.write(new Date().getFullYear()); </script>.
+            All rights reserved.
+        </span>
+    </div>
+</footer>
